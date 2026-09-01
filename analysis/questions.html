@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MS 491 — 20 candidate questions</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Charter", "Georgia", "Times New Roman", serif;
+    font-size: 10pt; line-height: 1.45; color: #16181d; margin: 0;
+  }
+  h1 { font-size: 17pt; margin: 0 0 2px; letter-spacing: -0.2px; }
+  h2 {
+    font-size: 12.5pt; margin: 26px 0 8px; padding-bottom: 4px;
+    border-bottom: 1.5px solid #16181d; page-break-after: avoid;
+  }
+  h3 {
+    font-size: 10.5pt; margin: 16px 0 5px; page-break-after: avoid;
+    font-weight: 700;
+  }
+  p { margin: 0 0 7px; }
+  .sub { color: #55595f; font-size: 9.5pt; margin-bottom: 14px; }
+  .lede { margin-bottom: 12px; }
+
+  .q { page-break-inside: avoid; margin-bottom: 15px; }
+  .q h3 { display: flex; gap: 8px; align-items: baseline; }
+  .rank {
+    font-family: "SF Mono", Menlo, monospace; font-size: 8.5pt; font-weight: 700;
+    color: #6b7078; flex: 0 0 auto; padding-top: 1px;
+  }
+  .meta { font-size: 9pt; color: #4a4e55; margin: 0 0 6px; }
+  .meta b { color: #16181d; font-weight: 600; }
+
+  table { border-collapse: collapse; width: 100%; margin: 7px 0 8px; font-size: 8.8pt; }
+  th, td { padding: 3px 7px; text-align: right; border-bottom: 0.5px solid #d8dade; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th {
+    border-bottom: 1px solid #16181d; font-weight: 600; font-size: 8.4pt;
+    text-transform: uppercase; letter-spacing: 0.3px; color: #4a4e55;
+  }
+  tbody td { font-variant-numeric: tabular-nums; }
+  td.lbl { color: #4a4e55; font-size: 8.6pt; }
+  tr.spread td { border-bottom: none; padding-top: 5px; color: #6b7078; font-size: 8.4pt; font-style: italic; }
+
+  .trap { font-size: 9pt; color: #4a4e55; border-left: 2px solid #c4c8ce; padding-left: 8px; margin: 6px 0 0; }
+  .trap b { color: #16181d; font-weight: 600; }
+
+  .note { background: #f4f5f7; padding: 9px 11px; font-size: 9.2pt; margin: 10px 0 16px; }
+  .note p:last-child { margin-bottom: 0; }
+  ul { margin: 0 0 8px; padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  .killed { page-break-inside: avoid; margin-bottom: 10px; }
+  .killed b { font-weight: 700; }
+  .newpage { page-break-before: always; }
+  code { font-family: "SF Mono", Menlo, monospace; font-size: 8.6pt; background: #f0f1f3; padding: 0 3px; }
+</style>
+</head>
+<body>
+
+<h1>Twenty candidate questions, tested</h1>
+<p class="sub">MS 491 Marketing Analytics · Airbnb group assignment · four cities: Antwerp, Amsterdam, Rio de Janeiro, Los Angeles County</p>
+
+<p class="lede">This is a shortlist to argue over, not a report. Every question below was run against all four
+cities before it was written down. Anything that did not survive the test is in the last section with the
+reason. We need to pick eight: three from the traveller, three from the regional manager, two from the host.
+Questions are ranked within each perspective, strongest first, so the top three in each block are the
+default answer unless someone makes a better case.</p>
+
+<div class="note">
+<p><b>What "tested" means here.</b> Every number comes from the standard cleaning rules in <code>findings.py</code>:
+drop the 19 listings priced at zero, fill blank <code>reviews_per_month</code> with 0 rather than dropping the row
+(that field is blank exactly when <code>number_of_reviews</code> is 0, so dropping would delete 42% of Rio), cap
+<code>minimum_nights</code> at 365, and ignore <code>last_review</code> as the brief instructs.</p>
+<p><b>Currency.</b> Prices are EUR in Antwerp and Amsterdam, BRL in Rio, USD in LA. No question compares raw
+prices. The default normalisation is the <b>price index</b> — each listing's price divided by its own city's
+median — which is unit-free and needs no exchange rate. Where a question needs an actual money comparison,
+that is stated explicitly and FX and PPP are both reported, because they disagree (question P2.3).</p>
+<p><b>The control that matters.</b> Most comparisons are made <i>within neighbourhood and room type</i>, then
+summarised across cells. This is not fussiness. Pooled comparisons reverse the sign of the professional-host
+result in Rio and hide it entirely in Amsterdam — a Simpson's paradox we already hit once. Where a result is
+reported pooled, it is because the within-cell version was checked and agreed.</p>
+</div>
+
+<!-- ============================================================ P1 -->
+<h2>P1 — The traveller</h2>
+<p style="font-size:9.4pt;color:#4a4e55;margin-bottom:12px;">Someone deciding where to go and what to book.
+The useful questions here are the ones that change what they actually do: which city, which tier, which
+neighbourhood, and what they are risking.</p>
+
+<div class="q">
+<h3><span class="rank">P1.1</span><span>What does an ordinary budget actually buy — a whole place, or somebody's spare room?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> This is the first real decision a traveller makes, and it is not
+about price, it is about privacy. "Can I afford a door I can close?"<br>
+<b>Columns.</b> <code>price</code>, <code>room_type</code>. <b>Normalisation:</b> budget expressed as a percentile of the
+city's own price distribution, so no currency conversion is needed at all.</p>
+<table>
+<thead><tr><th>Of the stock you can afford, share that is an entire home</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Budget at the city's 25th percentile</td><td>45.1%</td><td>44.1%</td><td>40.7%</td><td>16.2%</td></tr>
+<tr><td class="lbl">Budget at the median</td><td>60.7%</td><td>64.4%</td><td>57.0%</td><td>38.8%</td></tr>
+<tr><td class="lbl">Budget at the 75th percentile</td><td>70.6%</td><td>72.8%</td><td>65.2%</td><td>54.1%</td></tr>
+<tr class="spread"><td>Budget percentile needed for a 50/50 shot at an entire home</td><td>p34</td><td>p28</td><td>p37</td><td>p66</td></tr>
+</tbody>
+</table>
+<p>The cities split two-to-one-to-one. In Amsterdam a below-median budget already puts you mostly among whole
+apartments; you cross the 50% line at the 28th percentile. In LA you have to spend past the <i>66th</i>
+percentile before an entire home is even a coin flip, because private rooms are a third of LA's stock
+(32.6%) against a fifth of Amsterdam's (20.7%). Antwerp and Rio sit together in the middle. This is the
+cleanest four-city split we found, and it extends the validated entire-home premium finding by turning a
+price ratio into something a person can act on.</p>
+<p class="trap"><b>Trap.</b> The premium itself is not the story — entire homes cost more than private rooms in
+100% of the 142 testable neighbourhoods, so that direction is lawlike and boring. The interesting variation
+is in the <i>mix</i> of the market, not the size of the gap. Do not present the ratio; present the ladder.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P1.2</span><span>How steep is the ladder? What does it cost to trade up one notch?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> "If I spend a bit more, do I get meaningfully more, or is
+everything the same?" It decides whether shopping around is worth the evening.<br>
+<b>Columns.</b> <code>price</code>. <b>Normalisation:</b> price index (price ÷ city median), so every figure is a
+multiple of local money and directly comparable.</p>
+<table>
+<thead><tr><th>Price index at each decile</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">10th percentile</td><td>0.50</td><td>0.54</td><td>0.34</td><td>0.41</td></tr>
+<tr><td class="lbl">25th percentile</td><td>0.71</td><td>0.75</td><td>0.52</td><td>0.64</td></tr>
+<tr><td class="lbl">75th percentile</td><td>1.43</td><td>1.42</td><td>2.15</td><td>1.72</td></tr>
+<tr><td class="lbl">90th percentile</td><td>2.50</td><td>1.94</td><td>4.99</td><td>3.29</td></tr>
+<tr class="spread"><td>Ratio of the 90th to the 10th percentile</td><td>5.0×</td><td>3.6×</td><td>14.8×</td><td>8.0×</td></tr>
+</tbody>
+</table>
+<p>Amsterdam is a flat market — the top decile is under 4× the bottom, so trading up buys you very little and
+the sensible advice is to book the cheap end. Rio is the opposite: the ladder spans nearly 15×, so the same
+"Rio" holiday means completely different things at different budgets. LA sits in between at 8×. Practically:
+in Amsterdam, shopping hard saves you little; in Rio it is the whole game.</p>
+<p class="trap"><b>Trap.</b> Rio's spread is real but partly manufactured by a luxury tail — the maximum is
+R$132,358 against a R$300 median. Use percentiles and medians throughout and never a mean. The p90/p10 ratio
+is robust to the tail; a standard deviation would not be.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P1.3</span><span>What are the odds I am booking a place nobody has ever stayed in — and is that worse at the top of the market?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Reviews are the only quality signal in this dataset, and a
+traveller wants to know their chance of drawing a blank.<br>
+<b>Columns.</b> <code>number_of_reviews</code>, <code>price</code>. <b>Normalisation:</b> none needed — the price tiers
+are within-city quartiles, and the output is a percentage.</p>
+<table>
+<thead><tr><th>Share of listings with zero reviews</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Whole market</td><td>18.2%</td><td>12.3%</td><td>42.0%</td><td>21.5%</td></tr>
+<tr><td class="lbl">Cheapest quartile</td><td>16.3%</td><td>12.7%</td><td>25.9%</td><td>20.0%</td></tr>
+<tr><td class="lbl">Middle half</td><td>13.6%</td><td>10.5%</td><td>35.4%</td><td>18.8%</td></tr>
+<tr><td class="lbl">Dearest quartile</td><td>29.6%</td><td>15.6%</td><td><b>71.2%</b></td><td>28.3%</td></tr>
+</tbody>
+</table>
+<p>The headline is Rio's top quartile: seven out of ten of the most expensive listings in the city have never
+been reviewed once. That is not a quality signal, it is an indication that Rio's luxury tier is substantially
+aspirational inventory that has never transacted. Amsterdam is the mirror image — 12.3% overall and barely
+worse at the top, so almost everything you can book has a track record. The pattern (a U-shape, worst at the
+expensive end) holds in all four cities but the magnitude ranges from mild to extreme.</p>
+<p class="trap"><b>Trap.</b> Zero reviews does not prove the listing is bad or fake; a brand-new listing looks
+identical to an abandoned one in this data. We cannot separate the two without <code>last_review</code>, which the
+brief forbids. Say "no track record", not "fake". This pairs directly with P2.7, which is the same fact read
+from the platform's side.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P1.4</span><span>Can I actually book a weekend here — and does a short stay cost extra?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Most city breaks are two or three nights. A listing with a
+30-night minimum is invisible to that traveller no matter how good it is.<br>
+<b>Columns.</b> <code>minimum_nights</code>, <code>price</code>, <code>room_type</code>, <code>neighbourhood</code>.
+<b>Normalisation:</b> the availability figures are percentages; the price comparison is a ratio of medians
+computed within neighbourhood and room type, so it is unit-free.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Bookable for 3 nights or fewer</td><td>85.6%</td><td>79.3%</td><td>70.5%</td><td><b>54.9%</b></td></tr>
+<tr><td class="lbl">Requires 28 nights or more</td><td>2.8%</td><td>0.9%</td><td>2.0%</td><td><b>32.8%</b></td></tr>
+<tr><td class="lbl">Price of short-stay vs long-stay stock, within cell</td><td>0.93×</td><td>1.01×</td><td><b>0.75×</b></td><td><b>1.15×</b></td></tr>
+</tbody>
+</table>
+<p>Two separate findings, and the second one reverses. First, nearly half of LA's market is closed to a
+weekend visitor, against one listing in seven in Antwerp — LA's short-term rental ordinance has pushed 30.2%
+of its listings to exactly 30 or 31 nights. Second, once you compare like with like, short-stay listings in
+LA cost <i>15% more</i> than long-stay ones while in Rio they cost <i>25% less</i>. Rio's short-stay stock is
+the cheap end of the market; LA's is the scarce, regulated, premium end. Amsterdam is flat. That sign
+reversal is what makes this worth a slide. It survives trimming the top and bottom 1% of prices.</p>
+<p class="trap"><b>Trap.</b> Antwerp has only six testable cells for the price ratio, so treat the 0.93× as
+indicative. The availability percentages are solid everywhere.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P1.5</span><span>Is the listing everybody books the expensive one?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> A traveller sorting by popularity wants to know whether that
+sort is going to cost them money.<br>
+<b>Columns.</b> <code>reviews_per_month</code>, <code>price</code>, within <code>neighbourhood</code> × <code>room_type</code>.
+<b>Normalisation:</b> a within-cell ratio of medians, so unit-free.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Testable cells</td><td>13</td><td>43</td><td>47</td><td>147</td></tr>
+<tr><td class="lbl">Price of the busiest quartile vs the rest</td><td>0.82×</td><td>0.96×</td><td><b>0.68×</b></td><td>0.92×</td></tr>
+<tr><td class="lbl">Cells where the busiest are dearer</td><td>15%</td><td>35%</td><td><b>0%</b></td><td>30%</td></tr>
+</tbody>
+</table>
+<p>No — and in Rio, emphatically not. Rio's busiest quartile is priced 32% below its neighbours in every
+single one of 47 cells; there is not one exception. Amsterdam is nearly neutral at 0.96× with the busiest
+being dearer in a third of cells. So the traveller's advice inverts by city: in Rio, popularity and price
+point the same way and sorting by reviews saves you money; in Amsterdam popularity tells you almost nothing
+about price. This extends the validated price-versus-reviews finding by turning a correlation into a
+purchase rule.</p>
+<p class="trap"><b>Trap.</b> Causation runs both ways and we cannot separate them: cheap listings get booked
+more, and heavily booked listings may have been priced low to begin with. Present it as an association the
+traveller can exploit, not as a discount mechanism.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P1.6</span><span>Does it pay to shop neighbourhoods, or is the whole city priced the same?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> "Should I stay one district over to save money?" — and the
+answer determines whether a traveller should spend any time on the map at all.<br>
+<b>Columns.</b> <code>neighbourhood</code>, <code>price</code>, <code>room_type</code>. <b>Normalisation:</b> each
+neighbourhood's median divided by the city's median, entire homes only, neighbourhoods with 50+ listings.</p>
+<table>
+<thead><tr><th>Neighbourhood median, indexed to the city</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Neighbourhoods testable</td><td>14</td><td>20</td><td>37</td><td>81</td></tr>
+<tr><td class="lbl">10th percentile neighbourhood</td><td>0.81</td><td>0.83</td><td>0.64</td><td>0.71</td></tr>
+<tr><td class="lbl">90th percentile neighbourhood</td><td>1.19</td><td>1.19</td><td>2.30</td><td>1.49</td></tr>
+<tr class="spread"><td>Dearest neighbourhood ÷ cheapest</td><td>1.8×</td><td>1.8×</td><td>13.9×</td><td>10.9×</td></tr>
+</tbody>
+</table>
+<p>Antwerp and Amsterdam are geographically flat — moving districts changes your bill by about a fifth
+either way, so the map is not worth studying. Rio and LA are geographically enormous: the dearest
+neighbourhood is roughly 11–14× the cheapest. In those two cities, choosing the neighbourhood <i>is</i>
+choosing the price, and it dominates every other decision the traveller makes.</p>
+<p class="trap"><b>Trap.</b> Do not explain this with distance from the city centre. We tested that and it
+fails: the correlation with log price is <i>positive</i> in Rio (+0.15, because the value is the beach, not
+Centro) and flat in LA (+0.08, because LA is polycentric and Malibu is 45km out). The spread is real; the
+usual explanation for it is not. Name the neighbourhoods instead of drawing a radius.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P1.7</span><span>If I need to sleep near the airport, is there anything there — and what does it cost?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> An early flight, a layover, a one-night business trip. This is a
+constraint, not a preference, and it is the one case where a traveller ignores the rest of the city.<br>
+<b>Columns.</b> <code>latitude</code>, <code>longitude</code>, <code>price</code>, <code>minimum_nights</code>,
+<code>number_of_reviews</code>, plus airport coordinates looked up externally. <b>Normalisation:</b> price index.</p>
+<table>
+<thead><tr><th>Within 10km of the main international airport</th><th>Antwerp (BRU)</th><th>Amsterdam (AMS)</th><th>Rio (GIG)</th><th>LA (LAX)</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Listings available</td><td><b>0</b></td><td>8,417 (44.4%)</td><td>557 (1.6%)</td><td>5,408 (16.4%)</td></tr>
+<tr><td class="lbl">Price index vs city median</td><td>—</td><td>0.98</td><td><b>0.46</b></td><td><b>1.18</b></td></tr>
+<tr><td class="lbl">Bookable for one night</td><td>—</td><td>15.3%</td><td><b>56.9%</b></td><td>23.2%</td></tr>
+<tr><td class="lbl">Median reviews/month (city figure)</td><td>—</td><td>0.27 (0.28)</td><td>0.00 (0.06)</td><td>0.55 (0.44)</td></tr>
+</tbody>
+</table>
+<p>Four cities, four completely different answers, which is exactly what we want from a comparative question.
+Antwerp has <i>no</i> listings near Brussels Airport, its actual international gateway 34km away — the
+question is unanswerable there, and that is itself worth saying out loud about a file labelled "Belgium".
+Amsterdam is so compact that Schiphol is within 10km of nearly half the city, so "near the airport" is not a
+distinct segment at all. Rio's airport zone is a genuine budget-transit market: half the city median price,
+57% of it bookable for a single night against 28% citywide, but with a median of zero reviews per month, so
+the supply is there and dead. LA is the only city where the airport zone is a <i>premium</i> — 18% above the
+city median and busier than the city average, and El Segundo, 2.5km from LAX, has the second-highest
+demand-per-listing of any LA neighbourhood at 2.32×.</p>
+<p class="trap"><b>Trap, and read this before you pick it.</b> We first tested airport proximity the standard
+way — as a price gradient across the whole market — and it <b>fails</b>. Within neighbourhood and room type
+the correlation between distance-to-airport and log price is +0.002, +0.021, −0.019 and +0.007 in the four
+cities: nothing, four times over. It only works as a <i>conditional</i> question, asked about the catchment
+as a segment. If anyone presents this as "listings get cheaper the further you are from the airport", the
+data does not support it and the slide will not survive a question. Frame it as "who is served near the
+airport", never as a gradient.</p>
+</div>
+
+<!-- ============================================================ P2 -->
+<h2 class="newpage">P2 — The Airbnb regional manager</h2>
+<p style="font-size:9.4pt;color:#4a4e55;margin-bottom:12px;">Someone allocating marketing budget across
+regions and deciding where the platform should push. The useful questions are the ones that identify a
+problem worth spending money on, and distinguish between "no supply", "supply nobody wants" and "supply that
+cannot legally be sold".</p>
+
+<div class="q">
+<h3><span class="rank">P2.1</span><span>Which city's supply is not converting into bookings — and why not?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> The core budget question. Adding listings to a market that
+already cannot sell what it has is wasted money; the fix depends on which kind of failure it is.<br>
+<b>Columns.</b> <code>availability_365</code>, <code>reviews_per_month</code>. <b>Normalisation:</b> none — every
+figure is a share of that city's own listings.</p>
+<table>
+<thead><tr><th>Share of listings</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl"><b>Live</b> — bookable and earning</td><td>51.1%</td><td>33.4%</td><td>44.1%</td><td><b>61.1%</b></td></tr>
+<tr><td class="lbl"><b>On the shelf</b> — bookable, never booked</td><td>11.9%</td><td>4.6%</td><td><b>24.5%</b></td><td>15.5%</td></tr>
+<tr><td class="lbl"><b>Blocked</b> — earning, but no calendar open</td><td>30.6%</td><td><b>54.3%</b></td><td>13.9%</td><td>17.4%</td></tr>
+<tr><td class="lbl"><b>Dead</b> — no calendar, no bookings</td><td>6.4%</td><td>7.7%</td><td>17.4%</td><td>6.0%</td></tr>
+</tbody>
+</table>
+<p>This is the strongest platform-side question we have, because the four cities land in four different
+quadrants and each implies a different intervention. Amsterdam's problem is not demand — it is that 54.3% of
+its listings are earning reviews with a completely closed calendar, which is what a 30-night-per-year cap
+looks like in data. Advertising into Amsterdam buys nothing; the constraint is regulatory supply, not
+awareness. Rio is the opposite failure: 24.5% of its stock is sitting bookable and has never sold, plus
+another 17.4% that is neither bookable nor selling. Rio has too much supply, not too little. LA is the
+healthiest market at 61.1% live, and Antwerp is middling. The one-line answer to "should I put budget behind
+Rio instead of Belgium" is no — Rio's problem is demand generation, and Antwerp's is that it is small.</p>
+<p class="trap"><b>Trap.</b> "Blocked" mixes two different things we cannot separate: a listing sold out and a
+listing whose host has closed the calendar. Both produce <code>availability_365 = 0</code>. In Amsterdam the
+regulatory reading is well supported because the blocked listings still earn reviews; do not make the same
+claim for Antwerp without more care.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P2.2</span><span>Where inside each city is demand outrunning supply?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> The actual media-buying decision is made at neighbourhood level,
+not city level. This finds the neighbourhoods where guests are competing for too few listings — where host
+recruitment pays — and the ones drowning in unsold stock.<br>
+<b>Columns.</b> <code>neighbourhood</code>, <code>reviews_per_month</code>. <b>Normalisation:</b> a ratio of two
+shares — the neighbourhood's share of the city's monthly reviews divided by its share of the city's
+listings. 1.00 means supply and demand are matched. Entirely unit-free.</p>
+<table>
+<thead><tr><th>Demand share ÷ supply share, neighbourhoods with 50+ listings</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Neighbourhoods testable</td><td>16</td><td>22</td><td>49</td><td>127</td></tr>
+<tr><td class="lbl">Median neighbourhood</td><td>0.98</td><td>1.00</td><td><b>0.53</b></td><td>0.97</td></tr>
+<tr><td class="lbl">10th / 90th percentile</td><td>0.57 / 1.52</td><td>0.77 / 1.44</td><td>0.25 / 1.25</td><td>0.62 / 1.45</td></tr>
+<tr class="spread"><td>Hottest ÷ coldest neighbourhood</td><td>2.7×</td><td>2.3×</td><td><b>24.2×</b></td><td>9.5×</td></tr>
+</tbody>
+</table>
+<p>Antwerp and Amsterdam are internally efficient — every neighbourhood is within roughly a factor of two of
+balance, so there is no obvious place to point a budget. Rio and LA are wildly unbalanced. Rio's median
+neighbourhood runs at 0.53, meaning the typical Rio neighbourhood earns half the demand its listing count
+would justify, while Ipanema (1.55) and Copacabana (1.40) absorb it; Engenho de Dentro runs at 0.06. In LA
+the spread is 9.5× and the hot spots are not the famous ones — Del Aire (3.01) and El Segundo (2.32) beat
+Manhattan Beach (0.32) and Bel-Air (0.37) by a factor of seven. That inversion of the obvious answer is the
+finding. Supply concentration confirms the picture: Rio's largest neighbourhood, Copacabana, is 26.0% of the
+entire city's listings, against 5.1% for LA's largest.</p>
+<p class="trap"><b>Trap.</b> <code>reviews_per_month</code> is a proxy for bookings, not bookings. It understates
+demand wherever guests review less often, and that rate may differ by city. The <i>within-city</i>
+comparison is safe; do not compare Rio's 0.53 to LA's 0.97 as if they were the same unit. Compare the
+spreads, not the levels.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P2.3</span><span>"Belgium looks expensive — should I put the budget behind Rio instead?" Which of these markets is actually cheap?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Because it is the question that gets asked in the meeting, and
+because the honest answer is that it depends entirely on a choice most people make without noticing.<br>
+<b>Columns.</b> <code>price</code>, <code>room_type</code>. <b>Normalisation:</b> this is the one question that is
+<i>about</i> normalisation, so it reports all three — price index, market FX, and PPP — and shows they
+disagree.</p>
+<table>
+<thead><tr><th>Median nightly price</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">In local currency</td><td>€70</td><td>€130</td><td>R$300</td><td>$109</td></tr>
+<tr><td class="lbl">Converted at market FX</td><td>$76</td><td>$142</td><td><b>$61</b></td><td>$109</td></tr>
+<tr><td class="lbl">Converted at PPP</td><td><b>$95</b></td><td>$177</td><td>$124</td><td>$109</td></tr>
+<tr class="spread"><td>Cheapest → dearest at FX</td><td colspan="4">Rio &lt; Antwerp &lt; LA &lt; Amsterdam</td></tr>
+<tr class="spread"><td>Cheapest → dearest at PPP</td><td colspan="4">Antwerp &lt; LA &lt; Rio &lt; Amsterdam</td></tr>
+</tbody>
+</table>
+<p>Rio moves from cheapest to third-cheapest depending on which conversion you use, and Antwerp and Rio swap
+ends of the table. Neither conversion is wrong; they answer different questions. FX answers "what does this
+cost a foreign visitor arriving with dollars", which is the right lens for inbound tourism marketing. PPP
+answers "what does this cost relative to local incomes", which is the right lens for host recruitment and
+for judging whether a market is expensive by its own standards. A manager deciding where to advertise to
+international travellers should use FX and conclude Rio is cheap. A manager deciding where hosts will find
+listing attractive should use PPP and conclude Rio is not. Amsterdam is the dearest market under every
+normalisation, which is the only rank that is stable.</p>
+<p class="trap"><b>Trap.</b> The PPP factors are approximate OECD-style figures and the FX rates are mid-2023,
+roughly contemporaneous with the July 2023 file dates. The <i>rank reversal</i> is robust to reasonable
+changes in either; the exact dollar figures are not. Present the reversal, and be upfront that the rates are
+assumptions we brought in from outside the data. This is also the question that justifies why every other
+question in the deck uses a price index instead.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P2.4</span><span>Are private rooms an underused asset or dead weight?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Room type is one of the few levers the platform can actually
+pull through host recruitment and merchandising. If a format is earning more demand than its share of
+supply, recruit more of it.<br>
+<b>Columns.</b> <code>room_type</code>, <code>reviews_per_month</code>. <b>Normalisation:</b> share of demand ÷
+share of supply, unit-free. Uses reviews per month, a flow, rather than total reviews, a stock.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Private rooms, share of listings</td><td>22.7%</td><td>20.7%</td><td>25.6%</td><td>32.6%</td></tr>
+<tr><td class="lbl">Private rooms, share of monthly reviews</td><td>22.4%</td><td><b>47.1%</b></td><td>20.9%</td><td>27.5%</td></tr>
+<tr><td class="lbl">Private room index (demand ÷ supply)</td><td>0.99</td><td><b>2.28</b></td><td>0.82</td><td>0.85</td></tr>
+<tr><td class="lbl">Entire home index</td><td>1.02</td><td><b>0.63</b></td><td>1.08</td><td>1.11</td></tr>
+</tbody>
+</table>
+<p>Amsterdam is a genuine outlier and it reverses the pattern of the other three. Private rooms are a fifth
+of Amsterdam's listings and nearly half its bookings — they work more than twice as hard as their share of
+supply, while entire homes work at 0.63. In Antwerp the two formats are in equilibrium, and in Rio and LA
+entire homes do the heavier lifting. The recommendation writes itself and differs by city: recruit private
+rooms in Amsterdam, where they are scarce relative to demand and, not coincidentally, are the format least
+constrained by the entire-home rental cap; do not bother in Rio, where they underperform.</p>
+<p class="trap"><b>Trap.</b> Amsterdam's number is partly a regulatory artifact, not pure preference —
+entire-home rentals are capped in a way private rooms are not, so entire homes look weak partly because
+their calendars are shut. That does not invalidate the recommendation but it does change the reason, and
+someone will ask. Have the answer ready. It also connects to P2.1: Amsterdam's 54.3% "blocked" share is the
+same phenomenon seen from another angle.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P2.5</span><span>Do professional hosts actually sell better, or do they just charge more?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> The platform has to decide whether to court property managers
+or defend the amateur host base. That turns on whether professionals deliver bookings or just extract price.<br>
+<b>Columns.</b> <code>calculated_host_listings_count</code> (3+ = professional), <code>reviews_per_month</code>,
+<code>price</code>, within <code>neighbourhood</code> × <code>room_type</code>. <b>Normalisation:</b> within-cell
+differences and ratios, unit-free.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Professional share of listings</td><td>33.4%</td><td>9.7%</td><td>26.8%</td><td>39.2%</td></tr>
+<tr><td class="lbl">Price premium within cell (validated)</td><td><b>+30.0%</b></td><td>+15.7%</td><td><b>−14.7%</b></td><td>+1.1%</td></tr>
+<tr><td class="lbl">Reviews/month gap vs amateurs, within cell</td><td><b>−0.100</b></td><td>+0.040</td><td>+0.057</td><td><b>+0.175</b></td></tr>
+<tr><td class="lbl">Cells where professionals sell more</td><td>31%</td><td>55%</td><td>71%</td><td>68%</td></tr>
+</tbody>
+</table>
+<p>Putting price and performance side by side is what makes this interesting, and the two rows disagree in a
+useful way. Antwerp's professionals charge 30% more and sell <i>less</i> — they are harvesting a small
+market, and they are a third of it. LA's professionals charge essentially nothing extra (+1.1%, a genuine
+null) but sell distinctly more, which looks like operational competence rather than pricing power. Rio's
+professionals undercut on price by 15% and win on volume. Amsterdam has barely any professionals to speak
+of at 9.7%. Four cities, four different professional strategies. The platform's answer to "should we court
+property managers" is yes in LA, no in Antwerp.</p>
+<p class="trap"><b>Trap.</b> The price row only holds within neighbourhood <i>and</i> room type. Pooled, the
+Rio sign flips positive and Amsterdam's effect disappears behind a room-type composition difference. This is
+the Simpson's paradox we already documented, and it is worth showing the pooled and controlled numbers
+side by side rather than hiding it. Also note <code>calculated_host_listings_count</code> counts a host's
+listings on the whole platform, not just in this city.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P2.6</span><span>How exposed is each market to a minimum-stay regulation?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Regulatory risk is a real line item in a regional plan, and
+this dataset shows the fingerprint of regulation directly.<br>
+<b>Columns.</b> <code>minimum_nights</code>, <code>reviews_per_month</code>, <code>availability_365</code>,
+<code>number_of_reviews</code>. <b>Normalisation:</b> shares and within-city medians.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Listings at exactly 30 or 31 nights</td><td>1.0%</td><td>0.4%</td><td>1.2%</td><td><b>30.2%</b></td></tr>
+<tr><td class="lbl">Median reviews/month, 28+ night listings</td><td>0.08</td><td>0.14</td><td>0.00</td><td>0.21</td></tr>
+<tr><td class="lbl">Median reviews/month, 1–3 night listings</td><td>0.58</td><td>0.33</td><td>0.11</td><td>0.92</td></tr>
+<tr><td class="lbl">Zero-review share among 28+ night listings</td><td>33.8%</td><td>26.9%</td><td>56.6%</td><td>28.4%</td></tr>
+</tbody>
+</table>
+<p>LA is the only one of the four with a visible regulatory spike, and it is enormous — 30.2% of listings sit
+at exactly 30 or 31 nights, a number that cannot occur naturally. That segment earns roughly a quarter of
+the bookings per month of LA's short-stay stock. So about a third of LA's inventory has been pushed into a
+format that transacts far less often. The other three cities show smooth minimum-night distributions with no
+spike at all, which means Amsterdam's supply constraint (P2.1) operates through the calendar rather than
+through minimum stays — a different regulatory instrument producing a different data signature. For a
+regional manager this is a map of where the platform's exposure sits and what form it takes.</p>
+<p class="trap"><b>Trap.</b> We are inferring regulation from a distribution, not reading a statute. The
+30-night spike in LA is consistent with its short-term rental ordinance but the dataset cannot prove the
+causal link. Say "consistent with", and note that the 28+ night segment is a structurally different product
+(monthly rental) rather than a damaged version of the same one.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P2.7</span><span>Is the top of each market real inventory, or a price nobody has ever paid?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Reported average prices drive market perception and press
+coverage. If the expensive end has never transacted, the platform's own headline numbers are describing
+listings, not sales.<br>
+<b>Columns.</b> <code>number_of_reviews</code>, <code>price</code>, <code>availability_365</code>,
+<code>calculated_host_listings_count</code>. <b>Normalisation:</b> price index.</p>
+<table>
+<thead><tr><th>Listings that have never been reviewed</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Share of the city's stock</td><td>18.2%</td><td>12.3%</td><td><b>42.0%</b></td><td>21.5%</td></tr>
+<tr><td class="lbl">Their median price index</td><td>1.29</td><td>1.08</td><td><b>1.66</b></td><td>1.15</td></tr>
+<tr><td class="lbl">Share of them with an open calendar</td><td>65.1%</td><td>37.6%</td><td>58.5%</td><td>72.1%</td></tr>
+<tr><td class="lbl">Professional-host share among them (vs city)</td><td>44.2% (33.4%)</td><td>14.6% (9.7%)</td><td>23.1% (26.8%)</td><td>40.3% (39.2%)</td></tr>
+</tbody>
+</table>
+<p>In every city the never-reviewed listings are priced above the city median, but Rio's are priced 66%
+above it and they are 42% of the market. Rio's published price distribution is therefore substantially
+describing inventory that has never sold — which is a serious caveat on any statement about "the price of
+Rio". Amsterdam is the cleanest at 1.08. Note also who these listings belong to: in Antwerp and Amsterdam
+they skew professional (44.2% against a 33.4% base; 14.6% against 9.7%), so there the unsold expensive
+supply is coming from operators, while in Rio it skews amateur. Different problem, different fix — an
+operator conversation in Antwerp, a pricing-education product in Rio.</p>
+<p class="trap"><b>Trap.</b> Same limitation as P1.3 — a new listing and an abandoned one are
+indistinguishable without <code>last_review</code>. The 42% figure is a stock of never-transacted listings, not
+a failure rate. Also worth pairing with P3.2, which is the same fact from the host's side.</p>
+</div>
+
+<!-- ============================================================ P3 -->
+<h2 class="newpage">P3 — The prospective host</h2>
+<p style="font-size:9.4pt;color:#4a4e55;margin-bottom:12px;">Someone who owns a property and is deciding
+whether and how to list it. The useful questions produce a number they can act on this week, and an honest
+statement of how much the data actually pins that number down.</p>
+
+<div class="q">
+<h3><span class="rank">P3.1</span><span>"I have a two-bedroom in Amsterdam Oost — what should I charge?" How much do the comparables really tell me?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> It is the first question every host has. The interesting part
+is not the median of the comps, which anyone can compute, but how much of the price the comps actually
+explain — that is, how confident the host is entitled to be.<br>
+<b>Columns.</b> <code>price</code>, <code>neighbourhood</code>, <code>room_type</code>. <b>Normalisation:</b> R² and
+the residual spread are both unit-free, so they compare directly across currencies.</p>
+<table>
+<thead><tr><th>Variance of log price explained</th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Neighbourhood alone</td><td>0.122</td><td>0.063</td><td>0.092</td><td><b>0.277</b></td></tr>
+<tr><td class="lbl">Neighbourhood × room type</td><td>0.245</td><td>0.261</td><td>0.240</td><td><b>0.476</b></td></tr>
+<tr class="spread"><td>Price spread still unexplained, after the comps</td><td>1.98×</td><td><b>1.59×</b></td><td><b>2.59×</b></td><td>1.91×</td></tr>
+</tbody>
+</table>
+<p>The honest answer differs sharply by city and it is a genuinely useful thing to tell a host. In LA,
+knowing the neighbourhood and room type pins down almost half the variation in price, so the comps are
+trustworthy advice. In Rio they explain less than a quarter, and two otherwise-identical listings in the same
+neighbourhood and format still differ by a factor of 2.6 — so "look at your neighbours" is weak guidance in
+Rio and the host is largely on their own. Amsterdam is the tightest market in absolute terms: a low R², but
+only because there is little variation to explain in the first place, with a residual spread of just 1.59×.
+Low R² and low spread mean something quite different from low R² and high spread, and setting those two
+numbers next to each other is the contribution here.</p>
+<p class="trap"><b>Trap.</b> A low R² is not a failure of the analysis, it is the finding — it says the
+observable variables do not determine price, which is exactly what a host needs to know. Do not go looking
+for more variables to raise it; we do not have the ones that would (size, bedrooms, amenities, photos). Say
+plainly what is missing.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P3.2</span><span>I have no reviews yet. What do hosts like me charge — and are they getting it wrong?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Every new host is exactly here, and the instinct is to price at
+what the property seems worth. The data says what people in that position actually do.<br>
+<b>Columns.</b> <code>number_of_reviews</code>, <code>price</code>, within <code>neighbourhood</code> ×
+<code>room_type</code>. <b>Normalisation:</b> within-cell percentage difference of medians, unit-free.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Testable cells</td><td>9</td><td>33</td><td>79</td><td>119</td></tr>
+<tr><td class="lbl">No-review listings priced vs reviewed neighbours</td><td>+62.5%</td><td>+9.4%</td><td><b>+108.4%</b></td><td>+18.3%</td></tr>
+<tr><td class="lbl">Cells where they are priced higher</td><td>100%</td><td>67%</td><td>97%</td><td>83%</td></tr>
+<tr class="spread"><td>Entire homes only, as a robustness check</td><td>+43.0%</td><td>+8.3%</td><td>+173.4%</td><td>+22.5%</td></tr>
+</tbody>
+</table>
+<p>Hosts with no track record price <i>above</i> established neighbours everywhere, which is already
+counterintuitive — the entrant charges a premium rather than a discount. But the size of the mistake varies
+by a factor of ten. In Amsterdam the newcomer premium is a mild +9%, and Amsterdam also has the lowest
+never-reviewed share; in Rio it is +108%, and restricting to entire homes makes it worse at +173%. Read
+alongside P1.3, this is close to a causal story you can tell a host: Rio's new listings are priced at double
+the market and 42% of the city's stock has never been booked. The advice is concrete and it is different in
+each city — in Amsterdam, price at the comps; in Rio, price meaningfully below them until you have reviews.</p>
+<p class="trap"><b>Trap.</b> The direction of causation is genuinely ambiguous and you should say so. These
+listings may be unbooked because they are overpriced, or priced high because the host has no feedback yet and
+is guessing, or they may be a different and genuinely more expensive kind of property that simply arrived
+recently. The result survives winsorising at 1%/99% and holds within entire homes only, so it is not an
+outlier artifact — but it is an association, not proof.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P3.3</span><span>Should I open my calendar wider? Does being available more of the year actually get me more bookings?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Opening the calendar is the cheapest lever a host has — it
+costs nothing and takes a minute. Hosts assume it works.<br>
+<b>Columns.</b> <code>availability_365</code>, <code>reviews_per_month</code>, within <code>neighbourhood</code> ×
+<code>room_type</code>, restricted to listings that are bookable and have at least one review.
+<b>Normalisation:</b> correlations, unit-free.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Testable cells</td><td>9</td><td>31</td><td>38</td><td>126</td></tr>
+<tr><td class="lbl">Median within-cell correlation</td><td>+0.028</td><td>+0.061</td><td><b>−0.166</b></td><td><b>−0.085</b></td></tr>
+<tr><td class="lbl">Cells with a positive correlation</td><td>56%</td><td>65%</td><td><b>5%</b></td><td>23%</td></tr>
+</tbody>
+</table>
+<p>The answer reverses sign across the four cities, which makes it one of the better comparative questions in
+the set. In Antwerp and Amsterdam more availability is weakly associated with more bookings, as a host would
+expect. In Rio it is negative in 35 of 38 cells, and in LA negative in 77% of them. The most plausible
+reading is that the arrow runs the other way: a listing with 300 open days is not aggressively available, it
+is unsold, while a listing with 40 open days has had the rest of the year booked out from under it. Where
+that reading holds, high availability is a symptom of failure rather than a cause of success — and a host
+told "just open your calendar" is being given advice that the Rio data flatly contradicts.</p>
+<p class="trap"><b>Trap.</b> This is a reverse-causation question and the honest presentation says so
+explicitly rather than claiming availability harms bookings. The clean version of the claim is: in Rio and
+LA, availability cannot be used as a lever because it is mostly measuring the outcome, not the input. That
+is a limitation of the data, and stating it clearly is worth more than pretending the correlation is causal.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P3.4</span><span>Is a crowded neighbourhood bad news for me, or is that where the guests are?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> A prospective host looks at 9,000 listings in Copacabana and
+wonders whether they are entering a market or a bloodbath.<br>
+<b>Columns.</b> <code>neighbourhood</code>, <code>reviews_per_month</code>, <code>price</code>, entire homes only,
+neighbourhoods with 50+ listings. <b>Normalisation:</b> correlations across neighbourhoods within a city.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Neighbourhoods tested</td><td>14</td><td>20</td><td>37</td><td>81</td></tr>
+<tr><td class="lbl">Correlation of size with bookings per listing</td><td>+0.403</td><td>+0.404</td><td><b>+0.669</b></td><td><b>−0.305</b></td></tr>
+<tr><td class="lbl">Correlation of size with price</td><td>+0.258</td><td><b>+0.497</b></td><td><b>−0.137</b></td><td>+0.180</td></tr>
+</tbody>
+</table>
+<p>Three cities say competition is a good sign and one says the opposite. In Antwerp, Amsterdam and
+especially Rio, listings in bigger neighbourhoods get <i>more</i> bookings each, not fewer — supply has
+gone where the guests are and the crowd is a signal to follow. LA alone is negative: its big neighbourhoods
+are big because LA County is enormous and residential, not because they are tourist destinations, so scale
+there dilutes rather than concentrates. Amsterdam adds a second twist — its busy neighbourhoods are also its
+expensive ones (+0.497), so there you pay for the crowd, while in Rio the busy neighbourhoods are slightly
+<i>cheaper</i> (−0.137) and a host gets volume without paying for location.</p>
+<p class="trap"><b>Trap.</b> This is neighbourhood-level, so n is small — 14 neighbourhoods in Antwerp, and
+correlations on 14 points are fragile. Quote Rio and LA with confidence and Antwerp with care. It is also the
+constructive counterpart to our double jeopardy test, which failed: treating neighbourhoods as brands does
+not reproduce the Ehrenberg pattern, and we report that failure deliberately.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P3.5</span><span>Does it matter whether I price at a round number?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Price endings are a classic marketing question and hosts pick
+them by instinct. Nobody else in the class will look at this column this way.<br>
+<b>Columns.</b> <code>price</code>, <code>reviews_per_month</code>, <code>calculated_host_listings_count</code>,
+within <code>neighbourhood</code> × <code>room_type</code>. <b>Normalisation:</b> shares and within-cell
+differences. The digit itself is currency-dependent, which is part of the finding.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Price ends in 0</td><td>38.5%</td><td><b>43.5%</b></td><td><b>12.5%</b></td><td>30.0%</td></tr>
+<tr><td class="lbl">Price is a multiple of 50</td><td>13.1%</td><td>18.9%</td><td>7.4%</td><td>13.5%</td></tr>
+<tr><td class="lbl">Reviews/month gap, round vs not, within cell</td><td>−0.228</td><td>−0.110</td><td><b>+0.020</b></td><td><b>−0.325</b></td></tr>
+<tr><td class="lbl">Cells where round-priced listings do better</td><td>25%</td><td>13%</td><td><b>65%</b></td><td>8%</td></tr>
+</tbody>
+</table>
+<p>Two things vary and they vary independently. First, how common round pricing is: 43.5% of Amsterdam
+listings end in a zero against 12.5% in Rio, which is largely a denomination effect — a round number in euros
+is a coarser instrument than a round number in reais, where the median price is 300. Second, and more
+interesting, whether it is associated with anything. In LA round-priced listings are meaningfully less booked
+in 92% of cells; in Rio they are slightly <i>more</i> booked in 65% of cells. So the same superficial habit
+carries opposite associations in the two largest markets.</p>
+<p class="trap"><b>Trap.</b> The obvious confound is that round pricing is a proxy for an inattentive host,
+and inattentive hosts do worse for many reasons that have nothing to do with the digit. We checked whether
+it is simply professionals versus amateurs and it is not a clean split — in LA round-priced listings are
+30.4% professional against a 39.2% base, but in Rio the shares are nearly identical (27.2% against 26.8%).
+So the confound is present but does not explain the reversal. Rank this last of the P3 questions: it is the
+most novel and the least certain, and it should only make the final eight if the team wants one genuinely
+unexpected slide.</p>
+</div>
+
+<div class="q">
+<h3><span class="rank">P3.6</span><span>Does a longer minimum stay cost me bookings?</span></h3>
+<p class="meta"><b>Why someone asks it.</b> Minimum nights is a setting a host chooses on day one, usually
+to reduce turnover effort, and they rarely revisit it.<br>
+<b>Columns.</b> <code>minimum_nights</code>, <code>reviews_per_month</code>, within <code>neighbourhood</code> ×
+<code>room_type</code>. <b>Normalisation:</b> correlations and within-city medians, unit-free.</p>
+<table>
+<thead><tr><th></th><th>Antwerp</th><th>Amsterdam</th><th>Rio</th><th>LA</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Median within-cell correlation</td><td>−0.229</td><td>−0.144</td><td>−0.131</td><td><b>−0.314</b></td></tr>
+<tr><td class="lbl">Cells with a negative correlation</td><td>92%</td><td>93%</td><td>96%</td><td>96%</td></tr>
+<tr><td class="lbl">Median reviews/month at 1 night</td><td>0.61</td><td>0.33</td><td>0.02</td><td>0.86</td></tr>
+<tr><td class="lbl">Median reviews/month at 4–7 nights</td><td>0.19</td><td>0.18</td><td>0.02</td><td>0.27</td></tr>
+<tr><td class="lbl">Median reviews/month at 28+ nights</td><td>0.08</td><td>0.14</td><td>0.00</td><td>0.21</td></tr>
+</tbody>
+</table>
+<p>Yes, everywhere, and that is both the strength and the weakness of this question. The direction is
+negative in 92–96% of cells in all four cities, so the advice is universal: raising your minimum stay costs
+you bookings. What differs is how much. In LA the penalty is steepest (−0.314) and the drop from a one-night
+to a four-to-seven-night minimum is roughly two-thirds of your booking rate. In Rio the correlation is
+weakest and the levels are so low throughout that the lever barely matters. So the useful comparative
+framing is not "does it cost you" but "how much of your booking rate is this setting worth", which ranges
+from about a third to about two-thirds.</p>
+<p class="trap"><b>Trap, and the reason this ranks last.</b> The answer is qualitatively the same in all four
+cities, which by our own criterion makes it a weaker comparative question than the five above it. Include it
+only if the team wants a question that gives a host a clear, confident, immediately actionable instruction —
+which it does, and which none of the others quite do. Note also that the causal direction is defensible here
+in a way it is not for P3.3: a host sets minimum nights before guests respond to it.</p>
+</div>
+
+<!-- ============================================================ KILLED -->
+<h2 class="newpage">What we tested and killed</h2>
+<p>Everything here was actually run against all four cities. We are listing it because a failed test is
+harder to fabricate than a confirmed one, and because two of these are the analyses a group would reach for
+first.</p>
+
+<div class="killed"><p><b>Distance from the city centre.</b> The standard Airbnb analysis, and it is simply
+wrong on this data. The correlation with log price is <i>positive</i> in Rio (+0.15 — the value is the beach,
+not Centro) and flat in LA (+0.08 — LA is polycentric and Malibu is 45km out). Antwerp has exactly one
+listing beyond 10km, so there is no gradient to measure. Do not let this back into the deck.</p></div>
+
+<div class="killed"><p><b>Distance to the nearest major airport, as a price gradient.</b> The idea we were
+asked to evaluate. Tested against ANR and Brussels for Antwerp, Schiphol, Galeão and Santos Dumont, and LAX,
+Burbank, Long Beach and John Wayne. Pooled, the correlations with log price are +0.117, −0.019, +0.167 and
+−0.045 — weak and inconsistent in sign. Within neighbourhood and room type they collapse to +0.002, +0.021,
+−0.019 and +0.007: nothing at all, in all four cities. There is also no variation to exploit in the European
+cities — 80% of Antwerp's listings sit between 3.0 and 5.6km from its airport, and Amsterdam's between 8.0
+and 13.3km. <b>The gradient version is dead.</b> What survives is the conditional version, P1.7 — the airport
+catchment treated as a segment with its own price level, stay length and demand — and that one is genuinely
+strong because the four cities differ completely. Do not confuse the two; the distinction is the whole
+finding.</p></div>
+
+<div class="killed"><p><b>Distance to the supply centroid,</b> our attempt to rescue a geography variable by
+defining "the centre" from where the listings actually are rather than from a map. Within neighbourhood and
+room type the correlations are −0.096, −0.052, −0.032 and +0.011 — weak, and null in LA. Not worth a slide.
+Geography in this dataset works through named neighbourhoods (P1.6, P2.2), not through radius.</p></div>
+
+<div class="killed"><p><b>Total review count as a demand measure.</b> It mostly measures how long a listing
+has existed. Dividing reviews by reviews-per-month gives an implied months-live that ranges from about 5 to
+about 65 months within every city, and log reviews correlates +0.44 to +0.54 with that implied age. Use
+<code>reviews_per_month</code>, a flow, wherever demand is meant.</p></div>
+
+<div class="killed"><p><b>Estimated revenue per listing.</b> Requires an assumed review rate and an assumed
+stay length, neither of which is in the data. Any number produced this way is an assumption wearing a
+result's clothing.</p></div>
+
+<div class="killed"><p><b>Top-10 host share.</b> A market-size artifact — it falls automatically as a market
+gets bigger. Share of listings from hosts with 3+ listings is the honest version and is used in P2.5.</p></div>
+
+<div class="killed"><p><b>Shared rooms and hotel rooms as segments.</b> Too small to compare. Shared rooms
+are 0.3% of Amsterdam and 3.5% of LA; hotel rooms are 0.4% to 1.2% everywhere. Antwerp has 33 shared and 15
+hotel listings in total, and zero neighbourhoods with 50 or more of either. Any four-city comparison would be
+reading noise in two of the four cities.</p></div>
+
+<div class="killed"><p><b>Neighbourhood level 1 (<code>neighbourhood_group</code>).</b> Empty in three of the four
+files. It has three values in LA and nothing anywhere else, so it cannot support a comparative question.</p></div>
+
+<div class="killed"><p><b>Listing title in English versus the local language.</b> A genuinely interesting
+positioning question that we wanted to work, and it half does. Rio is the only city with a real split at
+42.7% English titles, and there the effect on bookings is exactly nothing — a rpm gap of +0.000, higher in
+46% of 76 cells. Amsterdam (+0.050) and LA (+0.130) lean positive but are 94% and 86% English already.
+Antwerp is untestable: 85.6% English and only four mixed cells. A question we can only answer in three
+cities, with a null in the one city where it matters, is not worth one of eight slots — but the Rio null is a
+nice throwaway line if someone asks about positioning.</p></div>
+
+<div class="killed"><p><b>Keyword premia in listing titles.</b> Tested 17 keywords within neighbourhood and
+room type. Only one signal is consistent across cities: "studio" in the title is a discount everywhere
+(0.52× to 0.79×), which is unsurprising since it describes the property, not the marketing. Everything else
+is thin — "view" ranges from 1.03× in Amsterdam to 1.41× in LA on 14 to 34 cells, and "beach" in Rio comes
+out at 0.90×, below neutral. Too few observations per cell to defend.</p></div>
+
+<div class="killed"><p><b>Double jeopardy, treating neighbourhoods as brands.</b> Retained deliberately as a
+reported failure rather than dropped. The correlation between neighbourhood size and median reviews per
+month is +0.44, −0.09, +0.65 and −0.21 — no consistent pattern, so the law does not hold here. It is worth
+one slide precisely because it did not work, and P3.4 is the constructive question built on the wreckage.</p></div>
+
+<!-- ============================================================ DASHBOARD -->
+<h2>The dashboard</h2>
+
+<p><b>Recommendation: build it for the host (P3), driven by P3.1, P3.2 and P3.6.</b></p>
+
+<p>The test is which perspective is naturally <i>parametric</i> — where changing an input produces a
+genuinely different answer rather than a filtered subset of the same one. Only the host passes cleanly. A
+host has a specific property in a specific neighbourhood at a specific format, and every one of those
+choices moves the answer. The regional manager's questions are a fixed comparison of four markets; there is
+one right answer per city and it belongs on a slide, not behind a control. The traveller's questions are
+parametric too, but a traveller dashboard collapses into exactly the filter-and-histogram we should avoid:
+set a budget, see the listings that match. That is a search box, and Airbnb already has one.</p>
+
+<p>The host case is different because the output is not a subset of listings, it is a <i>decision with a
+stated confidence</i>. That is the thing a static slide cannot do, because the confidence depends on inputs
+we cannot enumerate in advance.</p>
+
+<p><b>Inputs.</b> City; neighbourhood; room type; intended minimum nights; and a candidate nightly price the
+host types in.</p>
+
+<p><b>Outputs.</b> Four, in this order:</p>
+<ul>
+<li><b>Where that price sits</b> in the distribution of genuine comparables — same neighbourhood, same room
+type — as a percentile, with the median and quartiles shown. The obvious part, and the part every
+dashboard does.</li>
+<li><b>How much that comparison is worth.</b> The residual spread from P3.1: "in this neighbourhood and
+format, otherwise-identical listings still differ by 2.6×, so treat the median as a starting point, not an
+answer." This number changes with the inputs and it is the reason the dashboard has to be interactive. It
+is also the output no static chart can carry, because it is a statement about the strength of its own
+advice.</li>
+<li><b>The minimum-nights penalty,</b> from P3.6: the median reviews per month for that cell at the chosen
+minimum stay against 1 night, so the host sees what the setting costs before they choose it.</li>
+<li><b>The newcomer warning,</b> from P3.2: if the host has no reviews, show what other no-review listings
+in that cell charge and what fraction of them have never been booked. In Rio this output is dramatic and
+directly actionable; in Amsterdam it is nearly silent. That the same control produces a loud answer in one
+city and a quiet one in another is the argument for building it.</li>
+</ul>
+
+<p><b>What the user actually learns.</b> Not "here is the price" — they learn how much the market determines
+their price and how much is left to them, which is different in every city and every neighbourhood, and
+which is invisible in any single view. A host in LA leaves knowing the comps are trustworthy. A host in Rio
+leaves knowing the comps are nearly useless, that the typical newcomer there is priced at double the market,
+and that 42% of the city's listings have never been booked. Those are opposite pieces of advice from one
+tool, which is the case for the tool.</p>
+
+<p><b>Argument against the generic version.</b> A filter-and-histogram dashboard answers "what is in the
+data". This one answers "what should I do, and how much should I trust it". The distinguishing feature is
+that it reports its own uncertainty as a first-class output rather than hiding it, which is also the
+learning outcome the course is assessing. If we build a price slider and a bar chart, we have built
+something fifteen other groups could build from the same file.</p>
+
+<h2>Picking the eight</h2>
+<p>Default recommendation, if nobody objects: <b>P1.1, P1.3, P1.4</b> for the traveller — the budget ladder,
+the odds of a listing with no track record, and weekend bookability with its price reversal.
+<b>P2.1, P2.2, P2.3</b> for the manager — the inventory-health quadrants, the neighbourhood
+demand-supply mismatch, and the currency question that answers "should I back Rio instead" with a rank
+reversal. <b>P3.1, P3.2</b> for the host — what the comps are worth, and the newcomer overpricing result.</p>
+<p>That set covers all four cities in every question, contains three sign reversals and one rank reversal,
+extends the validated findings in four of the eight, and leaves P1.7 and P3.5 as the two most distinctive
+substitutes if the team wants something less conventional. The two arguments most likely to be made against
+it: swapping P1.7 in for P1.4 to get the airport question in front of the class, and swapping P2.5 in for
+P2.3 to lead with the Simpson's paradox instead of the currency reversal. Both are defensible.</p>
+
+</body>
+</html>

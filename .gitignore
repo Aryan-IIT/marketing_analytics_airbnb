@@ -1,0 +1,12 @@
+# Data — Inside Airbnb CSVs, ~12 MB. Re-download rather than commit.
+datasets/
+*.zip
+
+# Course material, not ours to republish
+MA-Syllabus_course_info.pdf
+
+# Junk
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
