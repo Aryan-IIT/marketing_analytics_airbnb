@@ -1,0 +1,30 @@
+{
+ "static_rows": [
+  {
+   "id": "q1",
+   "label": "Cost of guessing the citywide price",
+   "unit": "% off",
+   "fmt": "{:.0f}% off",
+   "worse": "high",
+   "values": {
+    "Antwerp": 15.3,
+    "Amsterdam": 11.4,
+    "LA": 26.0,
+    "Rio": 43.0
+   }
+  },
+  {
+   "id": "q2",
+   "label": "Professional-host pricing premium",
+   "unit": "%",
+   "fmt": "{:+.0f}%",
+   "worse": "low",
+   "values": {
+    "Antwerp": 19.2,
+    "Amsterdam": 13.8,
+    "LA": -3.3,
+    "Rio": -15.8
+   }
+  }
+ ]
+}

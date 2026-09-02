@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 368.64 210.057898" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-02T06:05:36.624485</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 210.057898 
+L 368.64 210.057898 
+L 368.64 0 
+L 0 0 
+L 0 210.057898 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 5.76 160.992 
+L 362.88 160.992 
+L 362.88 5.76 
+L 5.76 5.76 
+L 5.76 160.992 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(22.236472 172.661443)">Amsterdam</text>
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(29.0928 184.063299)">Centrum</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(111.920048 172.661443)">Amsterdam</text>
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(119.730829 184.064041)">citywide</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(221.635265 172.661443)">Rio</text>
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(208.225421 184.064041)">Zona Sul</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(311.318841 172.661443)">Rio</text>
+      <text style="font-size: 9.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #6b6b6b" transform="translate(299.097981 184.064041)">citywide</text>
+     </g>
+    </g>
+    <g id="text_5">
+     <text style="font-size: 9px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #6b6b6b" x="184.32" y="202.135789" transform="rotate(-0 184.32 202.135789)">% of listings from professional (3+) hosts</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2"/>
+   <g id="patch_3">
+    <path d="M 5.76 160.992 
+L 362.88 160.992 
+" style="fill: none; stroke: #e3e3e8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 21.992727 160.992 
+L 77.596544 160.992 
+L 77.596544 97.592838 
+L 21.992727 97.592838 
+z
+" clip-path="url(#pf3c71cd505)" style="fill: #ff3eb5"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 111.676303 160.992 
+L 167.280121 160.992 
+L 167.280121 127.805221 
+L 111.676303 127.805221 
+z
+" clip-path="url(#pf3c71cd505)" style="fill: #b9bcc4"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 201.359879 160.992 
+L 256.963697 160.992 
+L 256.963697 33.752656 
+L 201.359879 33.752656 
+z
+" clip-path="url(#pf3c71cd505)" style="fill: #ff3eb5"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 291.043456 160.992 
+L 346.647273 160.992 
+L 346.647273 69.562225 
+L 291.043456 69.562225 
+z
+" clip-path="url(#pf3c71cd505)" style="fill: #b9bcc4"/>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #b00070" x="49.794636" y="93.775658" transform="rotate(-0 49.794636 93.775658)">19%</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #1d1d1d" x="139.478212" y="123.98804" transform="rotate(-0 139.478212 123.98804)">10%</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #b00070" x="229.161788" y="29.935475" transform="rotate(-0 229.161788 29.935475)">37%</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Carlito, Calibri, Segoe UI, system-ui, sans-serif', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #1d1d1d" x="318.845364" y="65.745044" transform="rotate(-0 318.845364 65.745044)">27%</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pf3c71cd505">
+   <rect x="5.76" y="5.76" width="357.12" height="155.232"/>
+  </clipPath>
+ </defs>
+</svg>

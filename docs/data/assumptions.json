@@ -1,0 +1,141 @@
+{
+ "defaults": {
+  "unit_size": 50,
+  "payback_years": 10,
+  "nights_per_month": 15
+ },
+ "ranges": {
+  "unit_size": [
+   25,
+   120
+  ],
+  "payback_years": [
+   5,
+   25
+  ],
+  "nights_per_month": [
+   5,
+   30
+  ],
+  "ppsqm_pct": [
+   50,
+   150
+  ],
+  "cap_nights": [
+   0,
+   365
+  ]
+ },
+ "markets": {
+  "Antwerp": {
+   "ppsqm": 3100,
+   "minwage": 2154,
+   "fx_to_usd": 1.17,
+   "cap_nights": null
+  },
+  "Amsterdam": {
+   "ppsqm": 8500,
+   "minwage": 2400,
+   "fx_to_usd": 1.17,
+   "cap_nights": 30
+  },
+  "LA": {
+   "ppsqm": 6458,
+   "minwage": 2929,
+   "fx_to_usd": 1.0,
+   "cap_nights": 120
+  },
+  "Rio": {
+   "ppsqm": 9500,
+   "minwage": 1621,
+   "fx_to_usd": 0.19267822736030826,
+   "cap_nights": null
+  }
+ },
+ "sources": [
+  {
+   "field": "Property price per m\u00b2",
+   "market": "Antwerp",
+   "value": "\u20ac3,100/m\u00b2",
+   "source": "Deck working assumption, Belgian residential asking prices, 2023. Not sourced from the listings file.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Property price per m\u00b2",
+   "market": "Amsterdam",
+   "value": "\u20ac8,500/m\u00b2",
+   "source": "Deck working assumption, Amsterdam residential asking prices, 2023. Not sourced from the listings file.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Property price per m\u00b2",
+   "market": "LA",
+   "value": "$6,458/m\u00b2",
+   "source": "Deck working assumption, LA County median converted from price per ft\u00b2, 2023. Not sourced from the listings file.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Property price per m\u00b2",
+   "market": "Rio",
+   "value": "R$9,500/m\u00b2",
+   "source": "Deck working assumption, Rio asking prices, 2023. Source and year not independently confirmed \u2014 treat Rio's capital conclusion as the least firm of the four.",
+   "confidence": "unverified"
+  },
+  {
+   "field": "Minimum wage",
+   "market": "Antwerp",
+   "value": "\u20ac2,154/month",
+   "source": "Belgian gross statutory monthly minimum (GGMMI), 2023.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Minimum wage",
+   "market": "Amsterdam",
+   "value": "\u20ac2,400/month",
+   "source": "Dutch gross statutory monthly minimum, adult rate, 2023.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Minimum wage",
+   "market": "LA",
+   "value": "$2,929/month",
+   "source": "City of LA minimum wage $16.90/hr \u00d7 173.3 hours. Gross, pre-tax \u2014 same basis as the European figures.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Minimum wage",
+   "market": "Rio",
+   "value": "R$1,621/month",
+   "source": "Brazilian federal minimum wage, 2023 (sal\u00e1rio m\u00ednimo R$1,320 base; deck uses R$1,621). Year not independently confirmed.",
+   "confidence": "unverified"
+  },
+  {
+   "field": "Nightly cap",
+   "market": "Amsterdam",
+   "value": "30 nights/yr = 8.2%",
+   "source": "Amsterdam holiday-rental rules: 30 nights/year for unhosted short-stay rental.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "Nightly cap",
+   "market": "LA",
+   "value": "120 nights/yr = 32.9%",
+   "source": "LA Home-Sharing Ordinance base cap of 120 days/year. Extended Home-Sharing approval can lift it; the control below lets you test that.",
+   "confidence": "unverified"
+  },
+  {
+   "field": "Nightly cap",
+   "market": "Antwerp / Rio",
+   "value": "no modelled cap",
+   "source": "No nightly cap modelled. Both cities regulate short-stay rental by other means, so 'none' means 'not a nights ceiling', not 'unregulated'.",
+   "confidence": "assumption"
+  },
+  {
+   "field": "FX to USD",
+   "market": "all",
+   "value": "EUR 1.17 \u00b7 BRL 1/5.19",
+   "source": "Deck rates, 2023. Used only for the cross-market USD comparison, never inside a single market's arithmetic.",
+   "confidence": "assumption"
+  }
+ ]
+}

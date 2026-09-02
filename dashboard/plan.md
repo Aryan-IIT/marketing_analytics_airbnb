@@ -5,9 +5,33 @@ built from `four_master_questions.ipynb` and deployed on GitHub Pages. This docu
 the site is for, design brief, architecture, file structure, and build steps. A new Claude picking this
 up should be able to work from this file alone.
 
-**Status:** planned, not built. Nothing in `site/` or `build/` exists yet.
+**Status:** built and deployed — <https://aryan-iit.github.io/marketing_analytics_airbnb/>.
+Sections 1–9 are implemented as written. Section 12's build order was followed.
 **Decisions taken:** report + tool (not tool-only); public repo `Aryan-IIT/marketing_analytics_airbnb`;
 Pages served from `/docs`.
+
+**Where the build departed from this plan**, and why:
+
+- **The deck accent is `#FF3EB5`, not `#E8368F`.** Sampled from the PDF's content streams
+  (§11 q4). The deck's other sampled colours are `#F3F3F5` fill, `#E3E3E8` rules, `#FFF2FB` tint.
+  Fonts are **Century Schoolbook** and **Calibri**; the site uses Carlito (metric-compatible
+  Calibri) and Source Serif 4 as deliberate substitutes. `#FF3EB5` fails contrast as body text,
+  so text emphasis uses `#B00070` and the raw accent is reserved for fills and rules.
+- **§6's "residual spread 2.59×" does not exist in the notebook.** Neither does §7's "Q1 R²".
+  Nothing in the analysis fits either. The site reports the interquartile ratio (p75/p25) per
+  cell instead — Rio 3.06×, LA 1.79×, Antwerp 1.74×, Amsterdam 1.71× market-wide — and labels it
+  as exactly that. No R² is claimed anywhere.
+- **`cells.json` is 627 cells, not the estimated 2,000**, and 88 KB rather than 150–300 KB. The
+  `n >= 10` floor is stricter than expected against 499 neighbourhoods: LA 366, Rio 162,
+  Amsterdam 53, Antwerp 46.
+- **Nightly caps are user-editable**, not fixed constants. §11 q1 flagged LA's cap as unverified
+  and headline-critical, so rather than picking a number and asserting it, the page exposes it.
+  LA's breakeven is 59.8%, which needs a cap above ~218 nights/year to clear — the conclusion
+  survives the whole plausible range.
+- **One figure was added beyond §8's list**: `q4-b-professionalisation.svg`. Without it Q4 is
+  live bars only and loses the regulatory-exposure half of the question the deck asks.
+- **The Method sources table is full-width**, below the two prose columns rather than inside
+  one. It has four columns and was unreadable in half a page.
 
 ---
 
@@ -285,6 +309,12 @@ and crawlable.
 
 ## 11. Open questions
 
+**q4 is resolved** — the accent is `#FF3EB5` and the typefaces are Century Schoolbook and
+Calibri, both read from the PDF rather than eyeballed. **q1–q3 remain open and are now marked
+as unverified on the page itself**, in the Method table, rendered from `assumptions.json`'s
+`confidence` field. That is a mitigation, not an answer: someone should still check the
+ordinance and the two wage/price sources before this is presented.
+
 1. **LA's legal cap.** The deck uses 120/365 = 32.9%. The 120-night figure is extended home-sharing
    registration; the base LA cap is lower. This now matters much more than it did — it is the difference
    between "LA is blocked" and "LA is tight but workable", and that is a headline claim. Verify against
@@ -300,7 +330,7 @@ and crawlable.
 
 ---
 
-## 12. Build order
+## 12. Build order — done
 
 1. `build/export_assets.py` — real JSON and recoloured SVGs on disk first. Everything else is styling
    around real numbers; writing copy against placeholders wastes time. Validate against the regression

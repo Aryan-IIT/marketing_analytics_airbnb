@@ -1,0 +1,113 @@
+{
+ "generated_from": "Inside Airbnb quarterly snapshots, files dated 2023-07-06",
+ "min_cell_n": 10,
+ "trust_n": 30,
+ "order": [
+  "Antwerp",
+  "Amsterdam",
+  "LA",
+  "Rio"
+ ],
+ "markets": {
+  "Antwerp": {
+   "currency": "EUR",
+   "symbol": "\u20ac",
+   "listings": 2421,
+   "neighbourhoods": 57,
+   "median_price": 70.0,
+   "median_entire_home": 80.0,
+   "pro_share": 33.4,
+   "hhi": 22.1,
+   "guess_error_pct": 15.3,
+   "price_cv": 0.56,
+   "price_spread_ratio": 1.74,
+   "entire_home_premium": 1.7,
+   "pro_premium_pct": 19.2,
+   "min_stay_rho": -0.16,
+   "reviews_price_rho": -0.11
+  },
+  "Amsterdam": {
+   "currency": "EUR",
+   "symbol": "\u20ac",
+   "listings": 18949,
+   "neighbourhoods": 22,
+   "median_price": 130.0,
+   "median_entire_home": 147.0,
+   "pro_share": 9.7,
+   "hhi": 1.2,
+   "guess_error_pct": 11.4,
+   "price_cv": 0.54,
+   "price_spread_ratio": 1.71,
+   "entire_home_premium": 1.83,
+   "pro_premium_pct": 13.8,
+   "min_stay_rho": -0.1,
+   "reviews_price_rho": -0.02
+  },
+  "LA": {
+   "currency": "USD",
+   "symbol": "$",
+   "listings": 33067,
+   "neighbourhoods": 264,
+   "median_price": 109.0,
+   "median_entire_home": 148.0,
+   "pro_share": 39.2,
+   "hhi": 2.4,
+   "guess_error_pct": 26.0,
+   "price_cv": 0.61,
+   "price_spread_ratio": 1.79,
+   "entire_home_premium": 2.12,
+   "pro_premium_pct": -3.3,
+   "min_stay_rho": -0.21,
+   "reviews_price_rho": -0.15
+  },
+  "Rio": {
+   "currency": "BRL",
+   "symbol": "R$",
+   "listings": 35724,
+   "neighbourhoods": 156,
+   "median_price": 300.0,
+   "median_entire_home": 391.0,
+   "pro_share": 26.8,
+   "hhi": 2.3,
+   "guess_error_pct": 43.0,
+   "price_cv": 1.26,
+   "price_spread_ratio": 3.06,
+   "entire_home_premium": 2.7,
+   "pro_premium_pct": -15.8,
+   "min_stay_rho": -0.11,
+   "reviews_price_rho": -0.42
+  }
+ },
+ "room_mix": {
+  "Antwerp": {
+   "Entire home/apt": 75.3,
+   "Private room": 22.7,
+   "Shared room": 1.4,
+   "Hotel room": 0.6
+  },
+  "Amsterdam": {
+   "Entire home/apt": 77.8,
+   "Private room": 20.7,
+   "Shared room": 0.3,
+   "Hotel room": 1.2
+  },
+  "LA": {
+   "Entire home/apt": 63.5,
+   "Private room": 32.6,
+   "Shared room": 3.5,
+   "Hotel room": 0.4
+  },
+  "Rio": {
+   "Entire home/apt": 71.8,
+   "Private room": 25.6,
+   "Shared room": 2.2,
+   "Hotel room": 0.5
+  }
+ },
+ "targeted_pro_share": {
+  "Amsterdam\nCentrum": 18.6,
+  "Amsterdam\ncitywide": 9.7,
+  "Rio\nZona Sul": 37.4,
+  "Rio\ncitywide": 26.8
+ }
+}
