@@ -592,11 +592,27 @@
 
   // ------------------------------------------------------------- controls
   var SPEC = [
-    { id: 'unit', range: 'unit_size', step: 5, unit: 'm²' },
-    { id: 'payback', range: 'payback_years', step: 1, unit: 'years' },
-    { id: 'nights', range: 'nights_per_month', step: 1, unit: 'per month' },
-    { id: 'ppsqm', range: 'ppsqm_pct', step: 5, unit: '% of sourced' }
+    { id: 'unit', range: 'unit_size', step: 5, unit: 'm²', label: 'Unit size' },
+    { id: 'payback', range: 'payback_years', step: 1, unit: 'years', label: 'Payback horizon' },
+    { id: 'nights', range: 'nights_per_month', step: 1, unit: 'per month',
+      label: 'Nights let per month' },
+    { id: 'ppsqm', range: 'ppsqm_pct', step: 5, unit: '% of sourced',
+      label: 'Property price per m²' }
   ];
+
+  // Which assumptions actually enter each page's arithmetic. A control that
+  // cannot change anything on the page it sits on reads as a broken control,
+  // so pages render only the ones they use — Q4's income multiple is
+  // median × nights ÷ wage, and genuinely does not depend on the rest.
+  var USES = {
+    q3: ['unit', 'payback', 'ppsqm'],
+    q4: ['nights'],
+    tool: ['unit', 'payback', 'nights', 'ppsqm']
+  };
+  var PAGES = { q3: 'Q3', q4: 'Q4', tool: 'Your listing' };
+  var HREF = { q3: 'q3/', q4: 'q4/', tool: 'tool/' };
+
+  function shownFields() { return USES[PAGE] || FIELDS; }
 
   function syncControls() {
     SPEC.forEach(function (s) {
@@ -617,13 +633,11 @@
     if (!wrap) return;
     var ranges = S.assumptions.ranges;
 
-    SPEC.forEach(function (s) {
+    var shown = shownFields();
+    SPEC.filter(function (s) { return shown.indexOf(s.id) > -1; }).forEach(function (s) {
       var lim = ranges[s.range];
       var ctl = el('div', 'ctl');
-      var lab = el('label', null, {
-        unit: 'Unit size', payback: 'Payback horizon',
-        nights: 'Nights let per month', ppsqm: 'Property price per m²'
-      }[s.id]);
+      var lab = el('label', null, s.label);
       lab.htmlFor = s.id;
       ctl.appendChild(lab);
 
@@ -649,6 +663,29 @@
         n.value = A[s.id]; r.value = A[s.id]; commit();
       });
     });
+
+    var hidden = SPEC.filter(function (s) { return shown.indexOf(s.id) < 0; });
+    if (hidden.length && USES[PAGE]) {
+      var where = Object.keys(USES).filter(function (pg) {
+        return pg !== PAGE && hidden.some(function (s) { return USES[pg].indexOf(s.id) > -1; });
+      });
+      var note = el('p', 'panel-carry');
+      note.appendChild(document.createTextNode(
+        list(hidden.map(function (s) { return s.label.toLowerCase(); })) +
+        (hidden.length === 1 ? ' does not' : ' do not') +
+        ' enter this page’s arithmetic, so ' +
+        (hidden.length === 1 ? 'it is not shown here. Your value is kept'
+                             : 'they are not shown here. Your values are kept') +
+        ' and applied on '));
+      where.forEach(function (pg, i) {
+        if (i) note.appendChild(document.createTextNode(i === where.length - 1 ? ' and ' : ', '));
+        var a = el('a', null, PAGES[pg]);
+        a.href = BASE + HREF[pg];
+        note.appendChild(a);
+      });
+      note.appendChild(document.createTextNode('.'));
+      wrap.parentNode.insertBefore(note, wrap.nextSibling);
+    }
 
     var capWrap = $('cap-inputs');
     if (capWrap) {

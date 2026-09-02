@@ -294,7 +294,13 @@ figcaption, .caption-src {
   font-weight: 400; letter-spacing: 0.02em; text-transform: none;
   color: var(--mute); font-size: 12px;
 }
-.controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 1.4rem 1.7rem; }
+.controls .ctl { flex: 1 1 190px; max-width: 290px; }
+/* Spacing, not a rule: a border here would stop short of the panel edge
+   because the text is width-constrained for readability. */
+.panel-carry {
+  font-size: 0.78rem; color: var(--mute); margin: 1.1rem 0 0; max-width: 78ch;
+}
 .ctl label { display: block; font-size: 0.79rem; color: var(--mute); margin-bottom: 0.25rem; }
 .ctl-row { display: flex; align-items: center; gap: 0.6rem; }
 .ctl input[type=range] { width: 100%; accent-color: var(--magenta); margin: 0; flex: 1; }
@@ -477,7 +483,9 @@ footer p { margin: 0 0 0.55rem; }
   .cube { width: 62px; }
   .two-col, .finding, .finding.wide, .out-block { grid-template-columns: 1fr; gap: 1.5rem; }
   .finding { margin-bottom: 2rem; padding-bottom: 2rem; }
-  .controls, .cap-inputs, #tool-form { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .cap-inputs, #tool-form { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .controls { gap: 1rem 1.2rem; }
+  .controls .ctl { flex: 0 1 45%; max-width: none; }   /* do not let an odd last control span the row */
   .panel-title span { display: none; }
   .row { grid-template-columns: 4.4rem 1fr; gap: 0.6rem; }
   .axis { margin-left: 5rem; }

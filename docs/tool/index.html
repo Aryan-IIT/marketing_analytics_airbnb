@@ -44,11 +44,11 @@
 <aside id="panel" aria-label="Assumptions behind the capital outputs">
   <div class="panel-inner">
     <p class="panel-title">Assumptions
-      <span>— these drive the last two outputs, and carry over from Q3 and Q4</span></p>
+      <span>— these drive the last two outputs, and are shared with Q3 and Q4</span></p>
     <div class="controls" id="controls"></div>
     <div class="panel-foot">
       <p>Only the last two outputs use these. The comp band, the spread and the minimum-stay
-         penalty are measured from the listings file and do not move.</p>
+         penalty are measured from the listings file and do not move whatever you set.</p>
       <button type="button" class="linkbtn" id="share">Copy link to these settings</button>
       <button type="button" class="linkbtn" id="reset">Reset to sourced values</button>
     </div>
@@ -80,6 +80,15 @@
 
   <p class="loading">Loading 627 cells…</p>
   <div id="tool-out"></div>
+
+  <details class="caps">
+    <summary>Change the nightly caps</summary>
+    <p>The nightly cap decides whether the capital math above clears or is blocked, so it is
+       editable here as well as on <a href="../q3/">Q3</a> — it is the same setting in both
+       places. LA's 120 nights is the Home-Sharing Ordinance base cap; Amsterdam's 30 applies to
+       unhosted short-stay rental. Clear a field to model no cap at all.</p>
+    <div class="cap-inputs" id="cap-inputs"></div>
+  </details>
 
   <p class="implication"><span>Read this before using a number</span>
     Every output above carries its <code>n</code>. Where a cell is too thin the page prints
