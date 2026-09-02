@@ -81,7 +81,7 @@
       // Nudge clear of the limit rule rather than printing the number on top
       // of it — a 2px line through a digit is worse than a few px of drift.
       var at = w(v);
-      if (cap !== null && !over && w(cap) - at < 4.5) at = w(cap);
+      if (cap !== null && !over && w(cap) - at < 8) at = w(cap);
       val.style.left = at + '%';
       track.appendChild(val);
 
