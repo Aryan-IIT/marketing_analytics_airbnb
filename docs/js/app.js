@@ -277,7 +277,9 @@
       var rest = ORDER.filter(function (m) { return multiple(m) < 1; });
       v.appendChild(document.createTextNode(' (' + list(above.map(function (m) {
         return m + ' at ' + multiple(m).toFixed(2) + '×';
-      })) + ')' + (rest.length ? '; ' + list(rest) + ' do not.' : ' — all four.')));
+      })) + ')' + (rest.length
+        ? '; ' + list(rest) + (rest.length === 1 ? ' does not.' : ' do not.')
+        : ' — all four.')));
     } else {
       v.appendChild(el('b', null, 'no market clears a local minimum wage'));
       v.appendChild(document.createTextNode(' — the best is ' +
