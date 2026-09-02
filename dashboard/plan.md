@@ -32,6 +32,11 @@ Pages served from `/docs`.
   live bars only and loses the regulatory-exposure half of the question the deck asks.
 - **The Method sources table is full-width**, below the two prose columns rather than inside
   one. It has four columns and was unreadable in half a page.
+- **The single page became seven pages** (§4). The one-page version shipped first and was
+  replaced: the four questions were invisible in one long scroll and could not be linked to
+  individually. Assumption state now persists across pages and is shareable as a URL.
+- **`cells.json` loads only on `/tool/`.** It is 88 KB and no other page reads it, so the
+  question pages now fetch about 6 KB of JSON instead of 94 KB.
 
 ---
 
@@ -107,7 +112,38 @@ plotting cells to loop and save individually — the main piece of real work in 
 
 ## 4. Page structure
 
-Single page, `docs/index.html`, thin contents rail on desktop, anchor links.
+**Seven pages, not one.** The original single-page design was built and then replaced: one long
+scroll buried the four questions and gave no way to link to one. The site is now a small
+multi-page dashboard, each question at its own URL, with a sticky nav bar across every page.
+
+```
+/            Landing. Hero, four question cards, an explicit STATIC vs LIVE
+             legend, the live scorecard, links to the tool and method.
+/q1/         Where do I fit.            Static figures + prose.
+/q2/         How do I configure it.     Static figures + prose.
+/q3/         Does the money work.       Assumption panel + live bars.   [LIVE]
+/q4/         What could take it away.   Assumption panel + live bars.   [LIVE]
+/tool/       Your listing.              Per-cell lookup.                [LIVE]
+/method/     Cleaning, limits, and the sources table.
+```
+
+Every page carries the same nav bar (`aria-current` on the active item) and a prev/next pager,
+so there is always a way forward that is not scrolling. Nav markup is repeated in each file
+rather than injected by JS — duplicating twenty lines is the right price for a nav that works
+before JavaScript does.
+
+**Assumption state is shared across pages.** Q3, Q4 and the tool all read one state object:
+unit size, payback horizon, nights let, property-price multiplier and the four nightly caps. It
+is written to `localStorage` on every change and mirrored into the URL query string, so a
+scenario survives navigation and can be handed to someone as a link. A query string always beats
+stored state, so a shared link shows what its author saw. Out-of-range values are clamped to the
+ranges declared in `assumptions.json` rather than trusted. At defaults the query string is
+dropped, keeping the canonical URLs clean.
+
+Each control is a slider paired with a number box — the slider to explore, the box to reproduce
+an exact figure. `Reset to sourced values` disables itself when nothing has been changed.
+
+Superseded single-page design, kept for the record:
 
 ```
 Header          Title, standfirst, date, link to the full deck PDF.
@@ -244,9 +280,14 @@ marketing_analytics_airbnb/            ← repo root = current project root
 │       └── README.md
 │
 └── docs/                              ← GitHub Pages serves from here
-    ├── index.html
-    ├── css/style.css
-    ├── js/app.js                      ← assumption panel, Q3/Q4, the tool. No dependencies.
+    ├── index.html                     ← landing: four cards, legend, live scorecard
+    ├── q1/index.html   q2/index.html  ← static question pages
+    ├── q3/index.html   q4/index.html  ← live question pages
+    ├── tool/index.html                ← per-cell lookup
+    ├── method/index.html              ← cleaning, limits, sources table
+    ├── css/style.css                  ← one stylesheet, shared by all seven pages
+    ├── js/app.js                      ← shared. Reads data-page / data-base off <body>
+    │                                    and wires up only what that page contains.
     ├── data/
     │   ├── market_stats.json
     │   ├── cells.json

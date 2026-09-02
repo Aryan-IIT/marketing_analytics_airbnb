@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q3 · Does the money work — Airbnb host economics</title>
+<meta name="description" content="Buying a property to run as an Airbnb business in Amsterdam and LA is not weak economics — it is arithmetically blocked. Move the assumptions and test it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="q3" data-base="../">
+
+<a class="skip" href="#main">Skip to the calculator</a>
+
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="../">Where the Airbnb money actually works</a>
+    <nav aria-label="Sections">
+      <a href="../q1/"><span class="n">Q1</span> Where do I fit</a>
+      <a href="../q2/"><span class="n">Q2</span> How do I run it</a>
+      <a href="../q3/" aria-current="page"><span class="n">Q3</span> Does the money work</a>
+      <a href="../q4/"><span class="n">Q4</span> What takes it away</a>
+      <a href="../tool/">Your listing</a>
+      <a href="../method/">Method</a>
+    </nav>
+  </div>
+</div>
+
+<div id="page">
+
+<header class="hero short">
+  <p class="eyebrow">Master question 3 · Does the money work <span class="tag live">Live</span></p>
+  <h1>Buying a property to run as an Airbnb business in Amsterdam and LA is not weak economics —
+      it is arithmetically blocked</h1>
+  <p class="standfirst">
+    This page is arithmetic, not a measurement. Property prices, nightly caps and the payback
+    horizon come from outside the listings file, so they are controls rather than assertions.
+    Move them and watch what does and does not change.
+  </p>
+</header>
+
+<aside id="panel" aria-label="Assumptions behind this page">
+  <div class="panel-inner">
+    <p class="panel-title">Assumptions
+      <span>— everything on this page recomputes as you move these, and your settings follow you to Q4</span></p>
+    <div class="controls" id="controls"></div>
+    <div class="panel-foot">
+      <p>Property price, minimum wage, FX and nightly caps come from outside the listings file.
+         Every one is named and dated in <a href="../method/">Method</a>.</p>
+      <button type="button" class="linkbtn" id="share">Copy link to these settings</button>
+      <button type="button" class="linkbtn" id="reset">Reset to sourced values</button>
+    </div>
+  </div>
+</aside>
+
+<main id="main">
+  <p class="loading">Loading the data…</p>
+
+  <div class="finding wide">
+    <div class="chart" id="q3-chart" role="img"></div>
+    <div class="notes">
+      <p>Each bar is the occupancy a purchased unit must sustain to repay its own price over the
+         payback horizon, at that market's median entire-home nightly rate. The rule is the nights
+         the law allows, expressed as a share of the year; the magenta section of a bar is the
+         part of the requirement the law forbids.</p>
+      <p>The deck could fit two bars here. With all four, the picture changes: <strong>Amsterdam is
+         not the only blocked market.</strong> LA needs roughly 60% occupancy against an ordinance
+         whose base cap permits 33%.</p>
+    </div>
+  </div>
+
+  <p class="verdict" id="q3-verdict"></p>
+
+  <details class="caps">
+    <summary>Change the nightly caps</summary>
+    <p>LA's 120 nights is the Home-Sharing Ordinance base cap; Extended Home-Sharing approval can
+       lift it. Amsterdam's 30 nights applies to unhosted short-stay rental. Clear a field to
+       model no cap at all. LA's breakeven needs a cap above roughly 220 nights a year before it
+       clears — the conclusion survives the whole plausible range.</p>
+    <div class="cap-inputs" id="cap-inputs"></div>
+  </details>
+
+  <div class="finding">
+    <div class="chart" id="q3-ceiling"></div>
+    <div class="notes">
+      <p>The same arithmetic without the payback horizon: a full year of nights at the median
+         rate, as a share of what the property cost. It is a ceiling, not a return — nobody lets
+         365 nights — and it is here only to compare markets on one scale.</p>
+      <p>Rio leads on this measure and is the one market where the capital case is not blocked by
+         a nights cap. It is also the market whose property-price assumption we are least able to
+         source; see <a href="../method/">Method</a> before leaning on it.</p>
+    </div>
+  </div>
+
+  <p class="implication"><span>Implication</span>
+    The host-perspective recommendation is not "buy in the cheapest market". In two of four
+    markets the purchase case fails on the regulation before it ever reaches the spreadsheet, and
+    no assumption in the ranges above rescues it.</p>
+
+  <nav class="pager" aria-label="Question navigation">
+    <a class="prev" href="../q2/">
+      <span class="pager-k">← Previous · Master question 2</span>
+      <span class="pager-t">How do I configure the listing to get booked?</span>
+    </a>
+    <a class="next" href="../q4/">
+      <span class="pager-k">Next · Master question 4 · live</span>
+      <span class="pager-t">What could take it away?</span>
+    </a>
+  </nav>
+</main>
+
+<footer>
+  <p><strong>MS 491 Marketing Analytics</strong> — host perspective, first half.</p>
+  <p>The numbers driving this page are listed with their sources and years in
+     <a href="../method/">Method</a>. Two of them are marked unverified.</p>
+</footer>
+
+</div>
+<script src="../js/app.js"></script>
+</body>
+</html>

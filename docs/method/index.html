@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method and sources — Airbnb host economics</title>
+<meta name="description" content="Cleaning rules, every number taken from outside the listings file with its source and year, and what this data cannot answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="method" data-base="../">
+
+<a class="skip" href="#main">Skip to the method</a>
+
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="../">Where the Airbnb money actually works</a>
+    <nav aria-label="Sections">
+      <a href="../q1/"><span class="n">Q1</span> Where do I fit</a>
+      <a href="../q2/"><span class="n">Q2</span> How do I run it</a>
+      <a href="../q3/"><span class="n">Q3</span> Does the money work</a>
+      <a href="../q4/"><span class="n">Q4</span> What takes it away</a>
+      <a href="../tool/">Your listing</a>
+      <a href="../method/" aria-current="page">Method</a>
+    </nav>
+  </div>
+</div>
+
+<div id="page">
+
+<header class="hero short">
+  <p class="eyebrow">Method</p>
+  <h1 class="wide">What was measured, what was assumed, and what this data cannot answer</h1>
+</header>
+
+<main id="main">
+
+  <div class="two-col">
+    <div>
+      <h3>The data</h3>
+      <p>Four Inside Airbnb summary files, all dated 6 July 2023: 90,161 listings after cleaning.
+         The filenames are misleading and worth stating plainly — <em>listings-Belgium</em> is
+         Antwerp only, <em>listings-Netherlands</em> is Amsterdam's 22 districts, and
+         <em>listings_California</em> is Los Angeles County.</p>
+
+      <h3>Cleaning</h3>
+      <p>Listings priced at zero or below are dropped (19 across all four files). Blank
+         <code>reviews_per_month</code> is filled with 0 rather than dropped — it is blank exactly
+         when the review count is zero, so it is structurally missing, and dropping those rows
+         would delete 42% of Rio. <code>minimum_nights</code> is capped at 365. A host is
+         "professional" at three or more listings. These rules live in <code>findings.py</code>
+         and the build script applies them once.</p>
+
+      <h3>What this data cannot answer</h3>
+      <p>There are no bookings in this file. Reviews per month is a proxy for booking activity and
+         a biased one — guests review at different rates in different markets. There is no
+         occupancy, no revenue, no cost, and no time series, so nothing here is a forecast.
+         <a href="../q3/">Q3</a> and <a href="../q4/">Q4</a> are explicitly arithmetic on stated
+         assumptions, which is why they are adjustable rather than asserted.</p>
+
+      <h3>Currency</h3>
+      <p>Prices are never compared across markets in their raw form. Within-market work uses local
+         currency throughout; the only cross-market money comparison is Q4's, which uses each
+         country's own minimum wage as the denominator and so needs no exchange rate at all.</p>
+    </div>
+
+    <div>
+      <h3>How to reproduce this site</h3>
+      <p>Download the four Inside Airbnb files into <code>datasets/</code> and run
+         <code>dashboard/build/export_assets.py</code>. It rewrites every JSON file and every
+         figure in <code>docs/</code>, and prints a twenty-number regression table it must
+         reproduce exactly before the output is trustworthy. Nothing on these pages is typed in by
+         hand except the prose.</p>
+
+      <h3>Two numbers we would not defend as measured</h3>
+      <p>Rio's property price per m² and LA's nightly cap are the two inputs carrying the most
+         weight relative to how well we can source them, and both are marked in the table below.
+         Rio's price drives its "strongest capital case" result; LA's cap is the difference
+         between "tight" and "blocked". Move both on <a href="../q3/">Q3</a> and see how much of
+         the conclusion survives — for LA, all of it does until the cap passes roughly 220 nights
+         a year.</p>
+
+      <h3>What we changed from the deck</h3>
+      <p>Nothing in the arithmetic. The four missing bars on Q3 and Q4 are new, the per-cell
+         lookup is new, and the accent colour was sampled from the deck file rather than
+         estimated. Every shared number reproduces.</p>
+
+      <h3>Accessibility</h3>
+      <p>No value is encoded in colour alone — every bar prints its number, and the live charts
+         carry a text description of what they show. Alt text on the fixed figures states the
+         finding rather than the chart type.</p>
+    </div>
+  </div>
+
+  <h3 class="wide-head">Numbers from outside the listings file</h3>
+  <p class="lede">Rendered from the build's own record, so this page cannot claim a source the
+     build did not write down. Rows marked in magenta are the ones we could not independently
+     confirm.</p>
+  <p class="loading">Loading the source table…</p>
+  <div class="table-scroll">
+    <table id="src-table"></table>
+  </div>
+
+  <nav class="pager" aria-label="Section navigation">
+    <a class="prev" href="../tool/">
+      <span class="pager-k">← Previous · live</span>
+      <span class="pager-t">Your listing</span>
+    </a>
+    <a class="next" href="../">
+      <span class="pager-k">Back to the start</span>
+      <span class="pager-t">All four questions</span>
+    </a>
+  </nav>
+</main>
+
+<footer>
+  <p><strong>MS 491 Marketing Analytics</strong> — host perspective, first half.
+     Companion to <em>Airbnb_Marketing_Analytics_Deck_Templated.pdf</em>.</p>
+  <p>Listing data from <a href="https://insideairbnb.com/">Inside Airbnb</a>, used under
+     <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Snapshots dated
+     6 July 2023. Not affiliated with or endorsed by Airbnb, Inc.</p>
+  <p>Source and build script:
+     <a href="https://github.com/Aryan-IIT/marketing_analytics_airbnb">github.com/Aryan-IIT/marketing_analytics_airbnb</a></p>
+</footer>
+
+</div>
+<script src="../js/app.js"></script>
+</body>
+</html>

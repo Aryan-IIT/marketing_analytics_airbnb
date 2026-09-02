@@ -4,33 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Where the Airbnb money actually works — Antwerp, Amsterdam, LA, Rio</title>
-<meta name="description" content="An interactive companion to the MS 491 Airbnb deck: move the assumptions behind the capital arithmetic and look up the comp band for one listing.">
+<meta name="description" content="An interactive companion to the MS 491 Airbnb deck. Four questions a host asks, across four markets: two settled by the data, two you can move the assumptions on.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="home" data-base="">
 
-<a class="skip" href="#q1">Skip to the findings</a>
+<a class="skip" href="#questions">Skip to the four questions</a>
 
-<nav id="rail" aria-label="Contents">
-  <p class="rail-label">Contents</p>
-  <ol>
-    <li><a href="#framing">What this adds</a></li>
-    <li><a href="#q1">Q1 · Where do I fit</a></li>
-    <li><a href="#q2">Q2 · How do I run it</a></li>
-    <li><a href="#q3">Q3 · Does the money work</a></li>
-    <li><a href="#q4">Q4 · What takes it away</a></li>
-    <li><a href="#scorecard">Scorecard</a></li>
-    <li><a href="#tool">Your listing</a></li>
-    <li><a href="#method">Method &amp; sources</a></li>
-  </ol>
-</nav>
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="./">Where the Airbnb money actually works</a>
+    <nav aria-label="Sections">
+      <a href="q1/"><span class="n">Q1</span> Where do I fit</a>
+      <a href="q2/"><span class="n">Q2</span> How do I run it</a>
+      <a href="q3/"><span class="n">Q3</span> Does the money work</a>
+      <a href="q4/"><span class="n">Q4</span> What takes it away</a>
+      <a href="tool/">Your listing</a>
+      <a href="method/">Method</a>
+    </nav>
+  </div>
+</div>
 
 <div id="page">
 
-<header id="top">
+<header class="hero">
   <svg class="cube cube-tr" viewBox="0 0 100 116" aria-hidden="true">
     <g fill="none" stroke="#FF3EB5" stroke-width="1.5">
       <path d="M50 2 96 29v58L50 114 4 87V29Z"/>
@@ -38,11 +38,11 @@
     </g>
   </svg>
   <p class="eyebrow">MS 491 · Marketing Analytics · Host perspective</p>
-  <h1>Where the Airbnb money actually works</h1>
+  <h1 class="wide">Four questions a host asks, across four markets</h1>
   <p class="standfirst">
-    The deck argues the case across four markets. This page lets you test it. The capital
-    arithmetic behind Q3 and Q4 runs live in your browser, on assumptions you can move — and
-    the last section answers for one neighbourhood and room type rather than a market median.
+    The deck argues the case. This site lets you test it. Pick a question below — each one is
+    its own page. Two are settled by the data and read as findings; two are arithmetic on
+    assumptions you can move, and they recompute as you move them.
   </p>
   <p class="meta">
     Antwerp · Amsterdam · Los Angeles · Rio de Janeiro &nbsp;|&nbsp;
@@ -51,396 +51,112 @@
   </p>
 </header>
 
-<section id="framing">
-  <h2 class="plain">What the deck established, and what this page adds</h2>
-  <div class="two-col">
-    <p>
-      The deck answers four questions in the order a host actually asks them: where do I fit,
-      how do I configure the listing, does the money work, and what could take it away. Its
-      findings stand on their own and are not restated here.
-    </p>
-    <p>
-      Three things a slide could not do. <strong>First, show all four markets on the capital
-      questions</strong> — the deck had room for two bars each, and the missing ones change the
-      conclusion: two of the four markets are arithmetically blocked, not one.
-      <strong>Second, let you move the assumptions.</strong> Q3 and Q4 are scenario arithmetic on
-      numbers from outside the listings file. On paper that is a claim you must take on trust;
-      here you can try to break it. <strong>Third, answer for one listing.</strong> A host has a
-      neighbourhood and a room type, not a market median.
-    </p>
-  </div>
-</section>
+<section id="questions">
+  <h2 class="plain">Start here</h2>
+  <div class="cards">
 
-<!-- ============================================================ Q1 -->
-<section id="q1">
-  <p class="eyebrow">Master question 1 · Where do I fit</p>
-  <h2>Guessing the citywide price costs a Rio host 43% and an Amsterdam host 11% — the same
-      shortcut, four times the penalty</h2>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q1-b-price-guess-error.svg" alt="Rio 43% off, LA 26%, Antwerp 15%, Amsterdam 11% — median error from pricing at the citywide median instead of the neighbourhood median.">
-      <figcaption>Median error from pricing at the citywide median instead of your own
-        neighbourhood's, entire-home listings.</figcaption>
-    </figure>
-    <div class="notes">
-      <p>Rio has 156 neighbourhoods in the file and the widest gaps between them. Amsterdam has 22
-         and is comparatively flat, so a citywide number is nearly harmless there and badly wrong
-         in Rio.</p>
-      <p>This is the cheapest finding on the page to act on: it costs a host nothing to look up
-         their own neighbourhood, and in Rio it is worth 43% of the asking price.</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q1-d-price-spread.svg" alt="Rio's within-niche price spread is 1.26, roughly double Amsterdam's 0.54, LA 0.61, Antwerp 0.56.">
-      <figcaption>Price spread inside a single neighbourhood × room type — IQR divided by the
-        median. Higher means otherwise-similar listings still differ a lot.</figcaption>
-    </figure>
-    <div class="notes">
-      <p>Even after fixing neighbourhood and room type, Rio listings still spread across roughly
-         twice the range of Amsterdam's. In Rio the middle half of a niche runs 3.1× from the 25th
-         to the 75th percentile; in Amsterdam, 1.7×.</p>
-      <p>That spread is the reason the lookup at the bottom of this page reports a band rather than
-         a price. Two listings that look identical in this dataset are not priced alike, and no
-         number here can tell you which one you are.</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q1-a-room-mix.svg" alt="Entire homes dominate everywhere: Amsterdam 78%, Antwerp 75%, Rio 72%, LA 64%. LA has the largest private-room share at 33% and a real shared-room niche at 4%.">
-      <figcaption>Room-type mix by market.</figcaption>
-    </figure>
-    <div class="notes">
-      <p>Entire homes dominate all four markets. LA is the most room-diverse — a third of its
-         listings are private rooms and it has the only meaningful shared-room niche.</p>
-      <p>Antwerp holds the most concentrated ownership of the four: an HHI of 22 against 1–2 for
-         the others, and a third of its listings held by hosts with three or more.</p>
-    </div>
-  </div>
-
-  <p class="implication"><span>Implication</span>
-    Pricing research pays off in proportion to how varied the market is. In Rio it is the single
-    highest-return hour a host can spend; in Amsterdam the citywide number is close enough to
-    start from.</p>
-</section>
-
-<!-- ============================================================ Q2 -->
-<section id="q2">
-  <p class="eyebrow">Master question 2 · How do I configure it</p>
-  <h2>Pricing like a professional earns +19% in Antwerp and costs −16% in Rio — the same
-      instinct, opposite results</h2>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q2-b-professional-premium.svg" alt="Professional hosts price 19% above individuals in Antwerp and 14% in Amsterdam, 3% below in LA, and 16% below in Rio.">
-      <figcaption>Median price premium of hosts with 3+ listings over individual hosts, compared
-        within the same neighbourhood and room type.</figcaption>
-    </figure>
-    <div class="notes">
-      <p>In Antwerp and Amsterdam, multi-listing hosts charge more for the same kind of unit in
-         the same neighbourhood. In LA it is a wash. In Rio they charge visibly less.</p>
-      <p>The sign flip is the finding. "Price like the pros" is not portable advice — in Rio the
-         professional operators are competing on volume, and copying their pricing hands away
-         16%.</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q2-a-entire-home-premium.svg" alt="Entire homes command 2.70x a private room in Rio, 2.12x in LA, 1.83x in Amsterdam, 1.70x in Antwerp — above parity everywhere.">
-      <figcaption>Median ratio of entire-home to private-room price, computed within each
-        neighbourhood then taken across neighbourhoods.</figcaption>
-    </figure>
-    <div class="notes">
-      <p>The one lever that behaves the same way everywhere. Letting the whole place is worth
-         1.7× to 2.7× a private room, in every market, in nearly every neighbourhood.</p>
-      <p>Longer minimum stays cost bookings everywhere too — the correlation between minimum
-         nights and bookings per month is negative in all four markets, steepest in LA at
-         −0.21.</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q2-d-reviews-vs-price.svg" alt="Listings with more accumulated reviews charge less in all four markets: Rio -0.42, LA -0.15, Antwerp -0.11, Amsterdam -0.02.">
-      <figcaption>Correlation between accumulated review count and price, within neighbourhood ×
-        room type. <strong>Not a causal estimate.</strong></figcaption>
-    </figure>
-    <div class="notes">
-      <p class="warn">This one runs backwards, and it matters that we say so. Listings with more
-         reviews charge <em>less</em>, steeply so in Rio. The plain reading — that experience earns
-         a discount — is almost certainly wrong.</p>
-      <p>A cheap listing books faster and accumulates reviews faster. Review count is partly a
-         record of having been cheap. Read it as a symptom of the price, not a cause of it, and do
-         not price off this chart.</p>
-    </div>
-  </div>
-
-  <p class="implication"><span>Implication</span>
-    Two of the four levers are universal — let the whole place, keep minimum stays short. The
-    third, pricing posture, has to be decided market by market, and the fourth is not a lever at
-    all.</p>
-</section>
-
-<!-- ======================================================= LIVE ZONE -->
-<div id="live-zone">
-
-<aside id="panel" aria-label="Assumptions behind Q3 and Q4">
-  <div class="panel-inner">
-    <p class="panel-title">Assumptions <span>— everything below Q2 recomputes as you move these</span></p>
-    <div class="controls">
-      <div class="ctl">
-        <label for="unit">Unit size</label>
-        <input type="range" id="unit" min="25" max="120" step="5" value="50">
-        <output for="unit" id="unit-out">50 m²</output>
+    <a class="card" href="q1/">
+      <div class="card-top">
+        <span class="card-q">Master question 1</span>
+        <span class="tag static">Static</span>
       </div>
-      <div class="ctl">
-        <label for="payback">Payback horizon</label>
-        <input type="range" id="payback" min="5" max="25" step="1" value="10">
-        <output for="payback" id="payback-out">10 yr</output>
-      </div>
-      <div class="ctl">
-        <label for="nights">Nights let per month</label>
-        <input type="range" id="nights" min="5" max="30" step="1" value="15">
-        <output for="nights" id="nights-out">15</output>
-      </div>
-      <div class="ctl">
-        <label for="ppsqm">Property price per m²</label>
-        <input type="range" id="ppsqm" min="50" max="150" step="5" value="100">
-        <output for="ppsqm" id="ppsqm-out">as sourced</output>
-      </div>
-    </div>
-    <p class="panel-foot">
-      Property price, minimum wage, FX and nightly caps come from outside the listings file.
-      Every one is named and dated in <a href="#method">Method</a>.
-      <button type="button" id="reset">Reset to sourced values</button>
-    </p>
-  </div>
-</aside>
+      <h3>Where do I actually fit in this market?</h3>
+      <p>Guessing the citywide price costs a Rio host 43% and an Amsterdam host 11% — the same
+         shortcut, four times the penalty.</p>
+      <span class="card-go">Read the finding</span>
+    </a>
 
-<!-- ============================================================ Q3 -->
-<section id="q3">
-  <p class="eyebrow">Master question 3 · Does the money work <span class="live">live</span></p>
-  <h2>Buying a property to run as an Airbnb business in Amsterdam and LA is not weak economics —
-      it is arithmetically blocked</h2>
+    <a class="card" href="q2/">
+      <div class="card-top">
+        <span class="card-q">Master question 2</span>
+        <span class="tag static">Static</span>
+      </div>
+      <h3>How do I configure the listing to get booked?</h3>
+      <p>Pricing like a professional earns +19% in Antwerp and costs −16% in Rio — the same
+         instinct, opposite results.</p>
+      <span class="card-go">Read the finding</span>
+    </a>
 
-  <div class="finding wide">
-    <div class="chart" id="q3-chart" role="img" aria-labelledby="q3-verdict"></div>
-    <div class="notes">
-      <p>Each bar is the occupancy a purchased unit must sustain to repay its own price over the
-         payback horizon, at that market's median entire-home nightly rate. The magenta rule is
-         the nights the law allows, expressed as a share of the year.</p>
-      <p>The deck could fit two bars here. With all four, the picture changes: <strong>Amsterdam is
-         not the only blocked market.</strong> LA needs roughly 60% occupancy against an ordinance
-         whose base cap permits 33%.</p>
-      <p class="caption-src">Property prices are working assumptions, not measurements. Move the
-         slider above and watch what does and does not change.</p>
-    </div>
+    <a class="card is-live" href="q3/">
+      <div class="card-top">
+        <span class="card-q">Master question 3</span>
+        <span class="tag live">Live</span>
+      </div>
+      <h3>Does the money work if I buy a property?</h3>
+      <p>In Amsterdam and LA the purchase case is not weak economics — it is arithmetically
+         blocked. Move the assumptions and watch it hold.</p>
+      <span class="card-go">Open the calculator</span>
+    </a>
+
+    <a class="card is-live" href="q4/">
+      <div class="card-top">
+        <span class="card-q">Master question 4</span>
+        <span class="tag live">Live</span>
+      </div>
+      <h3>What could take it away?</h3>
+      <p>Fifteen nights a month is 3.6× minimum wage in Rio and 0.56× in Antwerp — one is an
+         investment, the other is pocket money.</p>
+      <span class="card-go">Open the calculator</span>
+    </a>
+
   </div>
 
-  <p class="verdict" id="q3-verdict"></p>
-
-  <details class="caps">
-    <summary>Change the nightly caps</summary>
-    <p>LA's 120 nights is the Home-Sharing Ordinance base cap; Extended Home-Sharing approval can
-       lift it. Amsterdam's 30 nights applies to unhosted short-stay rental. Set a market to blank
-       to model no cap.</p>
-    <div class="cap-inputs" id="cap-inputs"></div>
-  </details>
-
-  <div class="finding">
-    <div class="chart" id="q3-ceiling"></div>
-    <div class="notes">
-      <p>The same arithmetic without the payback horizon: a full year of nights at the median
-         rate, as a share of what the property cost. It is a ceiling, not a return — nobody lets
-         365 nights — and it is here only to compare markets on one scale.</p>
-      <p>Rio leads on this measure and is the one market where the capital case is not blocked by
-         a nights cap. It is also the market whose property-price assumption we are least able to
-         source; see <a href="#method">Method</a> before leaning on it.</p>
-    </div>
+  <div class="legend">
+    <h3>How to read this site</h3>
+    <dl>
+      <dt><span class="tag static">Static</span></dt>
+      <dd><strong>Q1 and Q2 are descriptive findings about the data.</strong> Nothing you enter
+          changes them, so they ship as fixed figures with prose. They are measurements, and they
+          would read the same for any host.</dd>
+      <dt><span class="tag live">Live</span></dt>
+      <dd><strong>Q3 and Q4 are scenario arithmetic on numbers from outside the listings file</strong>
+          — property prices, minimum wages, nightly caps. Those become controls. Your settings
+          follow you between pages and can be shared as a link, so you can hand someone the exact
+          scenario you were looking at.</dd>
+    </dl>
   </div>
-
-  <p class="implication"><span>Implication</span>
-    The host-perspective recommendation is not "buy in the cheapest market". In two of four
-    markets the purchase case fails on the regulation before it ever reaches the spreadsheet, and
-    no assumption in the ranges above rescues it.</p>
 </section>
 
-<!-- ============================================================ Q4 -->
-<section id="q4">
-  <p class="eyebrow">Master question 4 · What could take it away <span class="live">live</span></p>
-  <h2>The same fifteen nights a month is 3.6× minimum wage in Rio and 0.56× in Antwerp — one is
-      an investment, the other is pocket money</h2>
-
-  <div class="finding wide">
-    <div class="chart" id="q4-chart" role="img" aria-labelledby="q4-verdict"></div>
-    <div class="notes">
-      <p>Gross monthly takings at the local median entire-home rate, divided by that country's
-         statutory monthly minimum wage. Everything stays in local currency — no FX is involved in
-         this comparison, which is the point of using a wage as the yardstick.</p>
-      <p>Below 1.0× the listing is supplementary income. Rio sits far above it, which is why Rio
-         attracts investor conversion — and the regulatory attention that follows it.</p>
-    </div>
-  </div>
-
-  <p class="verdict" id="q4-verdict"></p>
-
-  <div class="finding">
-    <figure>
-      <img src="figures/q4-b-professionalisation.svg" alt="Amsterdam Centrum is 19% professional-host listings against 10% citywide; Rio's Zona Sul is 37% against 27% citywide.">
-      <figcaption>Share of listings held by hosts with three or more, in the neighbourhoods that
-        drew regulatory action versus their own citywide rate.</figcaption>
-    </figure>
-    <div class="notes">
-      <p>The places regulators moved on are the places that had professionalised fastest — roughly
-         double the citywide rate in Amsterdam Centrum, half again in Rio's Zona Sul.</p>
-      <p>For a host, the income multiple and the regulatory risk are the same number read twice.
-         The markets worth converting a property in are the markets where conversion is being
-         legislated against.</p>
-    </div>
-  </div>
-
-  <p class="implication"><span>Implication</span>
-    Rio's income multiple is the strongest result in the analysis and the most fragile. It is
-    strong enough to attract capital, which is exactly what triggers the rule changes that would
-    remove it.</p>
-</section>
-
-<!-- ====================================================== SCORECARD -->
 <section id="scorecard">
-  <h2 class="plain">Four questions, four markets</h2>
-  <p class="lede">The bottom two rows recompute from the assumption panel. The top two are
-     descriptive findings about the data and do not move.</p>
+  <h2 class="plain">All four at a glance</h2>
+  <p class="lede">The bottom two rows reflect your current assumptions and update wherever you
+     change them. Row labels link through to the question.</p>
+  <p class="loading">Loading the scorecard…</p>
   <div class="table-scroll">
-    <table id="score-table">
-      <caption class="visually-hidden">Scorecard of all four master questions across the four
-        markets</caption>
-    </table>
+    <table id="score-table"></table>
   </div>
 </section>
 
-</div><!-- /live-zone -->
-
-<!-- =========================================================== TOOL -->
-<section id="tool">
-  <p class="eyebrow">Apply it <span class="live">live</span></p>
-  <h2>Your neighbourhood and your room type, not the market median</h2>
-  <p class="lede">
-    The charts above report market medians. This reports the cell you are actually in — and, more
-    usefully, how much that number is worth trusting. Cells with fewer than 10 listings were
-    dropped at build time and never reach this page.
-  </p>
-
-  <form id="tool-form" autocomplete="off">
-    <div class="ctl">
-      <label for="t-market">Market</label>
-      <select id="t-market"></select>
-    </div>
-    <div class="ctl">
-      <label for="t-nbhd">Neighbourhood</label>
-      <select id="t-nbhd"></select>
-    </div>
-    <div class="ctl">
-      <label for="t-room">Room type</label>
-      <select id="t-room"></select>
-    </div>
-    <div class="ctl">
-      <label for="t-minnights">Your intended minimum stay</label>
-      <select id="t-minnights">
-        <option value="1">1 night</option>
-        <option value="4">4–7 nights</option>
-      </select>
-    </div>
-  </form>
-
-  <div id="tool-out"></div>
-</section>
-
-<!-- ========================================================= METHOD -->
-<section id="method">
-  <h2 class="plain">Method and sources</h2>
-
-  <div class="two-col">
-    <div>
-      <h3>The data</h3>
-      <p>Four Inside Airbnb summary files, all dated 6 July 2023: 90,161 listings after cleaning.
-         The filenames are misleading and worth stating plainly — <em>listings-Belgium</em> is
-         Antwerp only, <em>listings-Netherlands</em> is Amsterdam's 22 districts, and
-         <em>listings_California</em> is Los Angeles County.</p>
-
-      <h3>Cleaning</h3>
-      <p>Listings priced at zero or below are dropped (19 across all four files). Blank
-         <code>reviews_per_month</code> is filled with 0 rather than dropped — it is blank exactly
-         when the review count is zero, so it is structurally missing, and dropping those rows
-         would delete 42% of Rio. <code>minimum_nights</code> is capped at 365. A host is
-         "professional" at three or more listings. These rules live in
-         <code>findings.py</code> and the build script applies them once.</p>
-
-      <h3>What this data cannot answer</h3>
-      <p>There are no bookings in this file. Reviews per month is a proxy for booking activity and
-         a biased one — guests review at different rates in different markets. There is no
-         occupancy, no revenue, no cost, and no time series, so nothing here is a forecast. The
-         Q3 and Q4 sections are explicitly arithmetic on stated assumptions, which is why they are
-         adjustable rather than asserted.</p>
-    </div>
-
-    <div>
-      <h3>How to reproduce this page</h3>
-      <p>Download the four Inside Airbnb files into <code>datasets/</code> and run
-         <code>dashboard/build/export_assets.py</code>. It rewrites every JSON file and every
-         figure in <code>docs/</code>, and prints a twenty-number regression table it must
-         reproduce exactly before the output is trustworthy. Nothing on this page is typed in by
-         hand except the prose.</p>
-
-      <h3>Two numbers we would not defend as measured</h3>
-      <p>Rio's property price per m² and LA's nightly cap are the two inputs carrying the most
-         weight relative to how well we can source them, and both are marked below. Rio's price
-         drives its "strongest capital case" result; LA's cap is the difference between "tight"
-         and "blocked". Move both and see how much of the conclusion survives — for LA, all of
-         it does until the cap passes roughly 220 nights a year.</p>
-
-      <h3>What we changed from the deck</h3>
-      <p>Nothing in the arithmetic. The four missing bars on Q3 and Q4 are new, the per-cell
-         lookup is new, and the accent colour was sampled from the deck file rather than
-         estimated. Every shared number reproduces.</p>
-    </div>
-  </div>
-
-  <h3 class="wide-head">Numbers from outside the listings file</h3>
-  <p class="lede">Rendered from the build's own record, so this page cannot claim a source the
-     build did not write down. Rows marked in magenta are the ones we could not independently
-     confirm.</p>
-  <div class="table-scroll">
-    <table id="src-table"></table>
-  </div>
-
-  <p class="implication"><span>Currency</span>
-    Prices are never compared across markets in their raw form. Within-market work uses local
-    currency throughout; the only cross-market money comparison is Q4's, which uses each
-    country's own minimum wage as the denominator and so needs no exchange rate at all.</p>
+<section id="also">
+  <h2 class="plain">Also on this site</h2>
+  <ul class="more">
+    <li><a href="tool/">
+      <strong>Your listing</strong>
+      <span>The comp band for one neighbourhood and room type, with an honest statement of how
+            much to trust it. 627 cells.</span>
+    </a></li>
+    <li><a href="method/">
+      <strong>Method and sources</strong>
+      <span>Cleaning rules, every number taken from outside the listings file with its source and
+            year, and what this data cannot answer.</span>
+    </a></li>
+    <li><a href="https://github.com/Aryan-IIT/marketing_analytics_airbnb">
+      <strong>Source and build script</strong>
+      <span>The site ships no CSVs. One Python script turns the four datasets into the JSON and
+            figures behind these pages.</span>
+    </a></li>
+  </ul>
 </section>
 
 <footer>
-  <svg class="cube cube-bl" viewBox="0 0 100 116" aria-hidden="true">
-    <g fill="none" stroke="#FF3EB5" stroke-width="1.5">
-      <path d="M50 2 96 29v58L50 114 4 87V29Z"/>
-      <path d="M50 2v56M50 58 4 29m46 29 46-29M50 58v56"/>
-    </g>
-  </svg>
   <p><strong>MS 491 Marketing Analytics</strong> — host perspective, first half.
      Companion to <em>Airbnb_Marketing_Analytics_Deck_Templated.pdf</em>.</p>
   <p>Listing data from <a href="https://insideairbnb.com/">Inside Airbnb</a>, used under
      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Snapshots dated
      6 July 2023. Not affiliated with or endorsed by Airbnb, Inc.</p>
-  <p>Source and build script:
-     <a href="https://github.com/Aryan-IIT/marketing_analytics_airbnb">github.com/Aryan-IIT/marketing_analytics_airbnb</a></p>
 </footer>
 
-</div><!-- /page -->
-
+</div>
 <script src="js/app.js"></script>
 </body>
 </html>

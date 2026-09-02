@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your listing — Airbnb host economics</title>
+<meta name="description" content="The comp band for one neighbourhood and room type, with an honest statement of how much to trust it. 627 cells across four markets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="tool" data-base="../">
+
+<a class="skip" href="#main">Skip to the lookup</a>
+
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="../">Where the Airbnb money actually works</a>
+    <nav aria-label="Sections">
+      <a href="../q1/"><span class="n">Q1</span> Where do I fit</a>
+      <a href="../q2/"><span class="n">Q2</span> How do I run it</a>
+      <a href="../q3/"><span class="n">Q3</span> Does the money work</a>
+      <a href="../q4/"><span class="n">Q4</span> What takes it away</a>
+      <a href="../tool/" aria-current="page">Your listing</a>
+      <a href="../method/">Method</a>
+    </nav>
+  </div>
+</div>
+
+<div id="page">
+
+<header class="hero short">
+  <p class="eyebrow">Apply it <span class="tag live">Live</span></p>
+  <h1>Your neighbourhood and your room type, not the market median</h1>
+  <p class="standfirst">
+    Every chart on this site reports a market median. A host has a neighbourhood and a room type.
+    This reports the cell you are actually in — and, more usefully, how much that number is worth
+    trusting. Cells with fewer than 10 listings were dropped at build time and never reach this
+    page.
+  </p>
+</header>
+
+<aside id="panel" aria-label="Assumptions behind the capital outputs">
+  <div class="panel-inner">
+    <p class="panel-title">Assumptions
+      <span>— these drive the last two outputs, and carry over from Q3 and Q4</span></p>
+    <div class="controls" id="controls"></div>
+    <div class="panel-foot">
+      <p>Only the last two outputs use these. The comp band, the spread and the minimum-stay
+         penalty are measured from the listings file and do not move.</p>
+      <button type="button" class="linkbtn" id="share">Copy link to these settings</button>
+      <button type="button" class="linkbtn" id="reset">Reset to sourced values</button>
+    </div>
+  </div>
+</aside>
+
+<main id="main">
+  <form id="tool-form" autocomplete="off">
+    <div class="ctl">
+      <label for="t-market">Market</label>
+      <select id="t-market"></select>
+    </div>
+    <div class="ctl">
+      <label for="t-nbhd">Neighbourhood</label>
+      <select id="t-nbhd"></select>
+    </div>
+    <div class="ctl">
+      <label for="t-room">Room type</label>
+      <select id="t-room"></select>
+    </div>
+    <div class="ctl">
+      <label for="t-minnights">Your intended minimum stay</label>
+      <select id="t-minnights">
+        <option value="1">1 night</option>
+        <option value="4">4–7 nights</option>
+      </select>
+    </div>
+  </form>
+
+  <p class="loading">Loading 627 cells…</p>
+  <div id="tool-out"></div>
+
+  <p class="implication"><span>Read this before using a number</span>
+    Every output above carries its <code>n</code>. Where a cell is too thin the page prints
+    nothing rather than a figure built on a handful of listings — 499 neighbourhoods went in and
+    many of them are tiny. An honest blank beats a fabricated number.</p>
+
+  <nav class="pager" aria-label="Section navigation">
+    <a class="prev" href="../q4/">
+      <span class="pager-k">← Previous · Master question 4 · live</span>
+      <span class="pager-t">What could take it away?</span>
+    </a>
+    <a class="next" href="../method/">
+      <span class="pager-k">Next</span>
+      <span class="pager-t">Method and sources</span>
+    </a>
+  </nav>
+</main>
+
+<footer>
+  <p><strong>MS 491 Marketing Analytics</strong> — host perspective, first half.</p>
+  <p>Listing data from <a href="https://insideairbnb.com/">Inside Airbnb</a>, used under
+     <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Snapshots dated
+     6 July 2023.</p>
+</footer>
+
+</div>
+<script src="../js/app.js"></script>
+</body>
+</html>

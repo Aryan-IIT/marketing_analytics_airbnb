@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q1 · Where do I fit — Airbnb host economics</title>
+<meta name="description" content="Guessing the citywide price costs a Rio host 43% and an Amsterdam host 11% — the same shortcut, four times the penalty.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="q1" data-base="../">
+
+<a class="skip" href="#main">Skip to the finding</a>
+
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="../">Where the Airbnb money actually works</a>
+    <nav aria-label="Sections">
+      <a href="../q1/" aria-current="page"><span class="n">Q1</span> Where do I fit</a>
+      <a href="../q2/"><span class="n">Q2</span> How do I run it</a>
+      <a href="../q3/"><span class="n">Q3</span> Does the money work</a>
+      <a href="../q4/"><span class="n">Q4</span> What takes it away</a>
+      <a href="../tool/">Your listing</a>
+      <a href="../method/">Method</a>
+    </nav>
+  </div>
+</div>
+
+<div id="page">
+
+<header class="hero short">
+  <p class="eyebrow">Master question 1 · Where do I fit <span class="tag static">Static</span></p>
+  <h1>Guessing the citywide price costs a Rio host 43% and an Amsterdam host 11% — the same
+      shortcut, four times the penalty</h1>
+  <p class="standfirst">
+    Before a price gets set, a host needs to know what kind of market they are stepping into.
+    Nothing on this page depends on your inputs: these are measurements of the four datasets,
+    and they read the same for every host.
+  </p>
+</header>
+
+<main id="main">
+
+  <div class="finding">
+    <figure>
+      <img src="../figures/q1-b-price-guess-error.svg" alt="Rio 43% off, LA 26%, Antwerp 15%, Amsterdam 11% — median error from pricing at the citywide median instead of the neighbourhood median.">
+      <figcaption>Median error from pricing at the citywide median instead of your own
+        neighbourhood's, entire-home listings.</figcaption>
+    </figure>
+    <div class="notes">
+      <p>Rio has 156 neighbourhoods in the file and the widest gaps between them. Amsterdam has 22
+         and is comparatively flat, so a citywide number is nearly harmless there and badly wrong
+         in Rio.</p>
+      <p>This is the cheapest finding on the site to act on: it costs a host nothing to look up
+         their own neighbourhood, and in Rio it is worth 43% of the asking price.</p>
+      <p class="caption-src">You can look up any single neighbourhood on
+         <a href="../tool/">Your listing</a>.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <figure>
+      <img src="../figures/q1-d-price-spread.svg" alt="Rio's within-niche price spread is 1.26, roughly double Amsterdam's 0.54, LA 0.61, Antwerp 0.56.">
+      <figcaption>Price spread inside a single neighbourhood × room type — IQR divided by the
+        median. Higher means otherwise-similar listings still differ a lot.</figcaption>
+    </figure>
+    <div class="notes">
+      <p>Even after fixing neighbourhood and room type, Rio listings still spread across roughly
+         twice the range of Amsterdam's. In Rio the middle half of a niche runs 3.1× from the 25th
+         to the 75th percentile; in Amsterdam, 1.7×.</p>
+      <p>That spread is why the lookup reports a band rather than a price. Two listings that look
+         identical in this dataset are not priced alike, and no number here can tell you which one
+         you are.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <figure>
+      <img src="../figures/q1-a-room-mix.svg" alt="Entire homes dominate everywhere: Amsterdam 78%, Antwerp 75%, Rio 72%, LA 64%. LA has the largest private-room share at 33% and a real shared-room niche at 4%.">
+      <figcaption>Room-type mix by market.</figcaption>
+    </figure>
+    <div class="notes">
+      <p>Entire homes dominate all four markets. LA is the most room-diverse — a third of its
+         listings are private rooms and it has the only meaningful shared-room niche.</p>
+      <p>Antwerp holds the most concentrated ownership of the four: an HHI of 22 against 1–2 for
+         the others, and a third of its listings held by hosts with three or more.</p>
+    </div>
+  </div>
+
+  <p class="implication"><span>Implication</span>
+    Pricing research pays off in proportion to how varied the market is. In Rio it is the single
+    highest-return hour a host can spend; in Amsterdam the citywide number is close enough to
+    start from.</p>
+
+  <nav class="pager" aria-label="Question navigation">
+    <a class="prev" href="../">
+      <span class="pager-k">← Back</span>
+      <span class="pager-t">All four questions</span>
+    </a>
+    <a class="next" href="../q2/">
+      <span class="pager-k">Next · Master question 2</span>
+      <span class="pager-t">How do I configure the listing to get booked?</span>
+    </a>
+  </nav>
+</main>
+
+<footer>
+  <p><strong>MS 491 Marketing Analytics</strong> — host perspective, first half.</p>
+  <p>Listing data from <a href="https://insideairbnb.com/">Inside Airbnb</a>, used under
+     <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Snapshots dated
+     6 July 2023. See <a href="../method/">Method</a> for cleaning rules and limits.</p>
+</footer>
+
+</div>
+<script src="../js/app.js"></script>
+</body>
+</html>
