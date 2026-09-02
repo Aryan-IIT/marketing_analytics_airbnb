@@ -10,3 +10,8 @@ MA-Syllabus_course_info.pdf
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
+
+# Secrets — never commit
+.env
+*.env
+!.env.example
